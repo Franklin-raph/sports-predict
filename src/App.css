@@ -24,23 +24,23 @@
 }
 
 nav ul li{
-    margin: 5px 0;
+    margin: 10px 0;
 }
 
 @media screen and (max-width:1024px) {
-    .all-games, .place-bet-form, .sign-up-form{
+    .all-games, .place-bet-form, .sign-up-form, .error-modal{
         width: 60% !important;
     }
 }
 
 @media screen and (max-width:768px) {
-    .all-games, .place-bet-form, .sign-up-form{
+    .all-games, .place-bet-form, .sign-up-form, .error-modal{
         width: 80% !important;
     }
 }
 
 @media screen and (max-width:480px) {
-    .all-games, .place-bet-form, .sign-up-form{
+    .all-games, .place-bet-form, .sign-up-form, .error-modal{
         width: 95% !important;
     }
 }
