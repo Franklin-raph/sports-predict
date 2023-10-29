@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+form label {
+    @apply block
+}
+
+form input{
+    @apply outline-none px-2 py-1 rounded-md border border-gray-300
+}
+
+.sign-up-form input, .place-bet-form input, .sign-up-form div, .place-bet-form div{
+    @apply w-full
+}
+
+.sign-up-form div, .place-bet-form div{
+    @apply my-2
+}
+
+.place-bet-form label{
+    @apply text-sm
+}
+
+.all-games button{
+    @apply px-2 py-1 text-white rounded text-[16px]
+}

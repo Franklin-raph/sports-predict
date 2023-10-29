@@ -1,0 +1,8 @@
+*{
+    font-family: "Poppins";
+}
+
+.place-bet-form, .sign-up-form, .all-games{
+    box-shadow: 0 0 10px #ccc;
+    padding: 2rem !important;
+}
