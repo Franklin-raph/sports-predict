@@ -2,7 +2,45 @@
     font-family: "Poppins";
 }
 
-.place-bet-form, .sign-up-form, .all-games{
+.all-games{
     box-shadow: 0 0 10px #ccc;
     padding: 2rem !important;
+}
+
+.modal-bg{
+    position: fixed;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    background-color: #000000a8;
+    height: 100vh;
+}
+
+.error-modal{
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+}
+
+nav ul li{
+    margin: 5px 0;
+}
+
+@media screen and (max-width:1024px) {
+    .all-games, .place-bet-form, .sign-up-form{
+        width: 60% !important;
+    }
+}
+
+@media screen and (max-width:768px) {
+    .all-games, .place-bet-form, .sign-up-form{
+        width: 80% !important;
+    }
+}
+
+@media screen and (max-width:480px) {
+    .all-games, .place-bet-form, .sign-up-form{
+        width: 95% !important;
+    }
 }
