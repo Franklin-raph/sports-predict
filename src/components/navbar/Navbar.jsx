@@ -25,12 +25,12 @@ const Navbar = ({setShowSignIn}) => {
           {userDropDown && 
             <ul className='absolute bg-white shadow-2xl right-0 top-[40px] text-[14px] p-2 w-[50%]' style={{ border:"1px solid #D1D5DB" }}>
               {location.pathname === "/" ? 
-                <li className='flex items-center justify-between bg-[#4F3D3D] text-white py-1 px-2'>
+                <li className='flex items-center justify-between bg-[#4F3D3D] text-white py-1 px-2' onClick={() => navigate("/")}>
                     <Link>Home</Link>
                     <i class="ri-home-5-line"></i>
                   </li>
                   :
-                  <li className='flex items-center justify-between py-1'>
+                  <li className='flex items-center justify-between py-1' onClick={() => navigate("/")}>
                     <Link>Home</Link>
                     <i class="ri-home-5-line"></i>
                 </li>
