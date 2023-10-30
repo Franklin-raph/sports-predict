@@ -14,12 +14,13 @@ const Navbar = ({setShowSignIn}) => {
 
   function logoutUser(){
     localStorage.clear()
-    location.reload()
+    // window.location.reload()
+    window.location.href = "/"
   }
 
   return (
       <nav className='flex items-center justify-between w-full py-1 relative' style={{ borderBottom:"1px solid #4F3D3D" }}>
-          <h3>Logo</h3>
+          <h3 onClick={() => navigate("/")}>Logo</h3>
           {!user && <button className='bg-[#4F3D3D]' onClick={() => setShowSignIn(true)}>Login</button>}
           {user && <i class="ri-user-3-line text-lg cursor-pointer" onClick={() => toggleUserDropdown()}></i>}
           {userDropDown && 
