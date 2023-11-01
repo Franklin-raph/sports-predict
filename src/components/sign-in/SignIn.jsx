@@ -29,7 +29,7 @@ const SignIn = ({setShowSignIn, setShowSignUp}) => {
 
   return (
     <div className='modal-bg'>
-        <form className="flex items-center justify-center flex-col bg-[#fff] my-[6rem] p-5 mx-auto w-[27%] sign-up-form relative" onSubmit={handleUserSignIn}>
+        <form className="flex items-center justify-center flex-col bg-[#fff] mt-[9rem] p-5 mx-auto w-[27%] sign-up-form relative" onSubmit={handleUserSignIn}>
             <i className="ri-close-fill absolute right-2 top-2 text-2xl text-[#4F3D3D] hover:text-gray-500 cursor-pointer" onClick={() => closeSignIn()}></i>
             <h2 className="font-bold text-lg mb-6">Sign In</h2>
             <div>

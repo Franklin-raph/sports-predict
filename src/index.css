@@ -6,7 +6,7 @@ form label {
     @apply block
 }
 
-form input{
+form input, .verify-account input{
     @apply outline-none px-2 py-1 rounded-md border border-gray-300
 }
 
