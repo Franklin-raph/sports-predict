@@ -26,11 +26,10 @@ const Home = () => {
   return (
     <div>
       <div className="all-games flex items-center justify-center flex-col bg-[#fff] my-[6rem] p-5 mx-auto w-[37%]">
-        <Navbar setShowSignIn={setShowSignIn}/>
+        <Navbar setShowSignIn={setShowSignIn} setShowSignUp={setShowSignUp}/>
         <div className='w-full'>
           <div className="flex items-center justify-between my-5">
             <h2 className='text-lg font-bold text-[#4F3D3D]'>All Games</h2>
-            <p>#50,000</p>
           </div>
           <div className='flex items-center justify-between mt-3'>
             <div className='flex items-center gap-3'>

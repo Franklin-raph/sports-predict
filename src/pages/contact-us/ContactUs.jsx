@@ -20,7 +20,6 @@ const ContactUs = () => {
             <div className="w-full">
                 <div className="flex items-center justify-between my-5">
                     <h2 className='text-lg font-bold text-[#4F3D3D]'>Contact Us</h2>
-                    <p>#50,000</p>
                 </div>
             </div>
         </div>
