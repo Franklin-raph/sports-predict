@@ -21,8 +21,8 @@ const Navbar = ({setShowSignIn, setShowSignUp}) => {
   return (
       <nav className='flex items-center justify-between w-full py-1 relative' style={{ borderBottom:"1px solid #4F3D3D" }}>
         {!user && 
-          <div className='bg-[#4f3d3d] text-white w-full text-center rounded-[10px] mb-5'>
-            <h4 className='mb-[1rem] mt-[3rem]'>You do not have an account logged in</h4>
+          <div className='bg-[#4f3d3d] text-white w-full text-center rounded-[10px] mb-5 px-3'>
+            <h4 className='mb-[1rem] mt-[3rem] font-bold text-xl text-[#847777]'>You do not have an account logged in</h4>
             <div className='mt-[1rem] mb-[3rem] flex items-center justify-center gap-[20px]'>
               <button className='bg-[#d9d9d9]' style={{ padding:"10px 20px", color:"#874444" }} onClick={() => setShowSignUp(true)}>Sign Up</button>
               <button className='bg-[#847777]' style={{ padding:"10px 20px" }} onClick={() => setShowSignIn(true)}>Sign In</button>
