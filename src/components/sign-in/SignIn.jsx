@@ -2,7 +2,7 @@ import {useState} from 'react'
 import { Link } from 'react-router-dom'
 import ErrorAlert from '../alert/error-alert/ErrorAlert'
 
-const SignIn = ({setShowSignIn, setShowSignUp}) => {
+const SignIn = ({setShowSignIn, setShowSignUp, baseUrl}) => {
     
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -13,8 +13,17 @@ const SignIn = ({setShowSignIn, setShowSignUp}) => {
         if(!email || !password){
             setError("Please fill in all fields")
         }else{
+            const response = await fetch(`${baseUrl}/user/login`,{
+                method:"POST",
+                body:JSON.stringify({email, password}),
+                headers:{
+                    "Content-Type":"application/json"
+                }
+            })
+            const data = await response.json()
+            console.log(response, data)
             setShowSignIn(false)
-            localStorage.setItem("user", JSON.stringify(email))
+            // localStorage.setItem("user", JSON.stringify(email))
         }
     }
 

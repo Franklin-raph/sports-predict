@@ -5,7 +5,7 @@ import SignUp from '../../components/sign-up/SignUp'
 import PlaceBet from '../../components/place-bet/PlaceBet'
 import Navbar from '../../components/navbar/Navbar'
 
-const Home = () => {
+const Home = ({baseUrl}) => {
 
   const user = localStorage.getItem("user")
   const navigate = useNavigate()
@@ -49,8 +49,8 @@ const Home = () => {
           </div>
         </div>
       </div>
-      {showSignIn && <SignIn setShowSignIn={setShowSignIn} setShowSignUp={setShowSignUp}/>}
-      {showSignUp && <SignUp setShowSignUp={setShowSignUp} setShowSignIn={setShowSignIn}/>}
+      {showSignIn && <SignIn setShowSignIn={setShowSignIn} setShowSignUp={setShowSignUp} baseUrl={baseUrl}/>}
+      {showSignUp && <SignUp setShowSignUp={setShowSignUp} setShowSignIn={setShowSignIn} baseUrl={baseUrl}/>}
       {showPlaceBet && <PlaceBet setShowPlaceBet={setShowPlaceBet}/> }
       
     </div>

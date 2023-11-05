@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import ErrorAlert from '../alert/error-alert/ErrorAlert'
 
-const SignUp = ({setShowSignUp, setShowSignIn}) => {
+const SignUp = ({setShowSignUp, setShowSignIn, baseUrl}) => {
 
     const [email, setEmail] = useState("")
     const [name, setName] = useState("")
@@ -22,11 +22,21 @@ const SignUp = ({setShowSignUp, setShowSignIn}) => {
 
     async function handleUserSignUp(e){
         e.preventDefault()
-        if(!email || !password || !name || !confirmPassword){
+        if(!email || !password || !phone || !name || !confirmPassword){
             setError("Please fill in all fields")
         }else if(password !== confirmPassword){
             setError("Please both password fields must match")
         }else{
+            // console.log(JSON.stringify({email, password, phone, name}))
+            const response = await fetch(`${baseUrl}/user/create-account`,{
+                method:"POST",
+                body:JSON.stringify({email, password, phone, name}),
+                headers:{
+                    "Content-Type":"application/json"
+                }
+            })
+            const data = await response.json()
+            console.log(response, data)
             setVerifyModal(true)
             // localStorage.setItem("user", JSON.stringify(email))
         }
