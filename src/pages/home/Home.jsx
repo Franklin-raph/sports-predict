@@ -21,6 +21,7 @@ const Home = ({baseUrl}) => {
   },[])
 
   async function getAllAvailableMatches(){
+    setIsLoading(true)
     const response = await fetch(`${baseUrl}/get/matches`,{
       method:"GET",
       headers:{
@@ -29,6 +30,7 @@ const Home = ({baseUrl}) => {
     })
     const data = await response.json()
     if(response.ok){
+      setIsLoading(false)
       setAllMatches(data.message)
     }
     console.log(response, data)

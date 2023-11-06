@@ -14,6 +14,10 @@ function App() {
     window.scrollTo(0, 0)
   }
 
+  function checkScrollHeight(){
+    // console.log(window.document.)
+  }
+
   return (
     <BrowserRouter>
       {/* <Navbar /> */}
