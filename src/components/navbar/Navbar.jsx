@@ -5,7 +5,7 @@ const Navbar = ({setShowSignIn, setShowSignUp}) => {
 
   const navigate = useNavigate()
   const location = useLocation()
-  const user = localStorage.getItem("user")
+  const user = JSON.parse(localStorage.getItem("user"))
   const [userDropDown, setUserDropDown] = useState(false)
 
   function toggleUserDropdown(){
@@ -34,7 +34,8 @@ const Navbar = ({setShowSignIn, setShowSignUp}) => {
             <div className='flex items-center justify-between'>
               <div className='flex items-center gap-2'>
                 <i class="ri-user-3-line text-lg cursor-pointer" onClick={() => toggleUserDropdown()}></i>
-                <p>Sam Frank</p>
+                <p>{user.message.userDetails.username}</p>
+                {/* <p>{user.message.userDetails.username}</p> */}
               </div>
               <i class="ri-menu-line text-lg cursor-pointer" onClick={() => toggleUserDropdown()}></i>
             </div>

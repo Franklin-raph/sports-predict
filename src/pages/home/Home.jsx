@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import SignIn from '../../components/sign-in/SignIn'
 import SignUp from '../../components/sign-up/SignUp'
@@ -7,20 +7,30 @@ import Navbar from '../../components/navbar/Navbar'
 
 const Home = ({baseUrl}) => {
 
-  const user = localStorage.getItem("user")
+  const user = JSON.parse(localStorage.getItem("user"))
   const navigate = useNavigate()
   const location = useLocation()
   const [showSignIn, setShowSignIn] = useState(false)
   const [showSignUp, setShowSignUp] = useState(false)
   const [showPlaceBet, setShowPlaceBet] = useState(false)
+  const [allMatches, setAllMatches] = useState([])
 
-  function toggleUserDropdown(){
-    setUserDropDown(!userDropDown)
-  }
+  useEffect(() => {
+    getAllAvailableMatches()
+  },[])
 
-  function logoutUser(){
-    localStorage.clear()
-    location.reload()
+  async function getAllAvailableMatches(){
+    const response = await fetch(`${baseUrl}/get/matches`,{
+      method:"GET",
+      headers:{
+        Authorization: `Bearer ${user.token}`
+      }
+    })
+    const data = await response.json()
+    if(response.ok){
+      setAllMatches(data.message)
+    }
+    console.log(response, data)
   }
 
   return (
@@ -40,12 +50,22 @@ const Home = ({baseUrl}) => {
             <button className='bg-[#4F3D3D]' onClick={() => setShowPlaceBet(true)}>+</button>
           </div>
           <div className='my-5'>
+            {allMatches.map(match => (
+              <div className="bg-gray-300 py-4 rounded my-2">
+                <p className='text-center mb-3'>{match.league}</p>
+                <div className='flex items-center gap-3 justify-center'>
+                  <p>{match.team1}</p>
+                  <span>VS</span>
+                  <p>{match.team2}</p>
+                </div>
+                <p className='text-center mt-3'>{match.time}</p>
+              </div>
+            ))}
+            {/* <div className="bg-gray-300 py-4 rounded my-2"></div>
             <div className="bg-gray-300 py-4 rounded my-2"></div>
             <div className="bg-gray-300 py-4 rounded my-2"></div>
             <div className="bg-gray-300 py-4 rounded my-2"></div>
-            <div className="bg-gray-300 py-4 rounded my-2"></div>
-            <div className="bg-gray-300 py-4 rounded my-2"></div>
-            <div className="bg-gray-300 py-4 rounded my-2"></div>
+            <div className="bg-gray-300 py-4 rounded my-2"></div> */}
           </div>
         </div>
       </div>
