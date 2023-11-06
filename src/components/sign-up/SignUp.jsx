@@ -10,6 +10,8 @@ const SignUp = ({setShowSignUp, setShowSignIn, baseUrl}) => {
     const [password, setPassword] = useState("")
     const [error, setError] = useState(false)
     const [verifyModal, setVerifyModal] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+    console.log(isLoading)
 
     function closeSigUp(){
         setShowSignUp(false)
@@ -28,16 +30,24 @@ const SignUp = ({setShowSignUp, setShowSignIn, baseUrl}) => {
             setError("Please both password fields must match")
         }else{
             // console.log(JSON.stringify({email, password, phone, name}))
+            setIsLoading(true)
             const response = await fetch(`${baseUrl}/user/create-account`,{
                 method:"POST",
-                body:JSON.stringify({email, password, phone, name}),
+                body:JSON.stringify({email, password, phone, username:name}),
                 headers:{
                     "Content-Type":"application/json"
                 }
             })
             const data = await response.json()
             console.log(response, data)
-            setVerifyModal(true)
+            if(response) setIsLoading(false)
+            if(response.ok){
+                setVerifyModal(true)
+            }
+            if(!response.ok){
+                setError(data.message)
+            }
+            
             // localStorage.setItem("user", JSON.stringify(email))
         }
     }
@@ -67,7 +77,17 @@ const SignUp = ({setShowSignUp, setShowSignIn, baseUrl}) => {
                 <label>Confirm Password</label>
                 <input type="password" placeholder='****' onChange={e => setConfirmPassword(e.target.value)} value={confirmPassword}/>
             </div>
-            <input type="submit" value="Sign Up" className="bg-[#4F3D3D] mt-3 text-white mb-2 py-2 cursor-pointer"/>
+            {/* <input type="submit" value="Sign Up" className="bg-[#4F3D3D] mt-3 text-white mb-2 py-2 cursor-pointer"/> */}
+            
+            {isLoading ?
+                <button className="bg-[#4F3D3D] mt-3 text-white mb-2 py-2 w-full rounded-md cursor-not-allowed">
+                    <i class="fa-solid fa-gear fa-spin"></i>
+                </button>
+                :
+                <button type="submit" disabled={isLoading} className="bg-[#4F3D3D] mt-3 text-white mb-2 py-2 cursor-pointer w-full rounded-md">
+                    Sign Up
+                </button>
+            }
             <p>Already have an account? <span onClick={() => openSignIn()} className="underline cursor-pointer">sign in</span> </p>
         </form>
         {error && <ErrorAlert error={error} setError={setError}/>}

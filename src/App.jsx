@@ -8,7 +8,7 @@ import ContactUs from './pages/contact-us/ContactUs'
 
 function App() {
 
-  const baseUrl = "https://sbc-tu3x.onrender.com/"
+  const baseUrl = "https://sbc-tu3x.onrender.com/api/sbc"
 
   return (
     <BrowserRouter>
