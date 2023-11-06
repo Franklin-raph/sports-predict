@@ -14,6 +14,7 @@ const Home = ({baseUrl}) => {
   const [showSignUp, setShowSignUp] = useState(false)
   const [showPlaceBet, setShowPlaceBet] = useState(false)
   const [allMatches, setAllMatches] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     getAllAvailableMatches()
@@ -61,11 +62,16 @@ const Home = ({baseUrl}) => {
                 <p className='text-center mt-3'>{match.time}</p>
               </div>
             ))}
-            {/* <div className="bg-gray-300 py-4 rounded my-2"></div>
-            <div className="bg-gray-300 py-4 rounded my-2"></div>
-            <div className="bg-gray-300 py-4 rounded my-2"></div>
-            <div className="bg-gray-300 py-4 rounded my-2"></div>
-            <div className="bg-gray-300 py-4 rounded my-2"></div> */}
+            {isLoading &&
+              <div>
+                <div className="bg-gray-300 py-4 rounded my-2 animated-background"></div>
+                <div className="bg-gray-300 py-4 rounded my-2 animated-background"></div>
+                <div className="bg-gray-300 py-4 rounded my-2 animated-background"></div>
+                <div className="bg-gray-300 py-4 rounded my-2 animated-background"></div>
+                <div className="bg-gray-300 py-4 rounded my-2 animated-background"></div>
+              </div>
+            }
+            
           </div>
         </div>
       </div>

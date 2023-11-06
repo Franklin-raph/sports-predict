@@ -10,6 +10,10 @@ function App() {
 
   const baseUrl = "https://sbc-tu3x.onrender.com/api/sbc"
 
+  function scrollToTop(){
+    window.scrollTo(0, 0)
+  }
+
   return (
     <BrowserRouter>
       {/* <Navbar /> */}
@@ -19,6 +23,7 @@ function App() {
         <Route path='/rankings' element={<Rankings />}/>
         <Route path='/contact-us' element={<ContactUs />}/>
       </Routes>
+      <button className='fixed bottom-5 right-5 bg-[#4F3D3D] px-2 py-1 text-xl text-white rounded-md' onClick={() => scrollToTop()}><i class="ri-arrow-up-double-fill"></i></button>
     </BrowserRouter>
   )
 }

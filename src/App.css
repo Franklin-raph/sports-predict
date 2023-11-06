@@ -2,6 +2,10 @@
     font-family: "Poppins";
 }
 
+html, body{
+    scroll-behavior: smooth;
+}
+
 .all-games{
     box-shadow: 0 0 10px #ccc;
     padding: 2rem !important;
@@ -47,6 +51,41 @@
 nav ul li{
     margin: 10px 0;
 }
+
+@keyframes placeHolderShimmer {
+    0% {
+        background-position: -468px 0
+    }
+
+    100% {
+        background-position: 468px 0
+    }
+}
+
+.animated-background {
+    animation-duration: 1.25s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: placeHolderShimmer;
+    animation-timing-function: linear;
+    background: #D1D5DB;
+    background: linear-gradient(to right, #D1D5DB 10%, rgba(87, 66, 66, 0.127) 18%, #D1D5DB 33%);
+    background-size: 800px 104px;
+    height: 70px;
+    position: relative;
+}
+
+/* .settings-animated-background {
+    animation-duration: 1.25s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: placeHolderShimmer;
+    animation-timing-function: linear;
+    background: #141625;
+    background: linear-gradient(to right, #141625 10%, #1F213A 18%, #141625 33%);
+    background-size: 800px 104px;
+    position: relative;
+} */
 
 @media screen and (max-width:1024px) {
     .all-games, .place-bet-form, .sign-up-form, .error-modal{
