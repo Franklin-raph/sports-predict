@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import ErrorAlert from '../alert/error-alert/ErrorAlert'
 
 const SignIn = ({setShowSignIn, setShowSignUp, baseUrl}) => {
@@ -8,6 +8,7 @@ const SignIn = ({setShowSignIn, setShowSignUp, baseUrl}) => {
     const [password, setPassword] = useState("")
     const [error, setError] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const navigate = useNavigate()
 
     async function handleUserSignIn(e){
         e.preventDefault()
@@ -27,12 +28,12 @@ const SignIn = ({setShowSignIn, setShowSignUp, baseUrl}) => {
             console.log(response, data)
             if(response) setIsLoading(false)
             if(response.ok){
-                setVerifyModal(true)
+                localStorage.setItem("user", JSON.stringify(data))
+                setShowSignIn(false)
             }
             if(!response.ok){
                 setError(data.message)
             }
-            // setShowSignIn(false)
             // localStorage.setItem("user", JSON.stringify(email))
         }
     }
