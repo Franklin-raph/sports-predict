@@ -79,7 +79,7 @@ const Home = ({baseUrl}) => {
       </div>
       {showSignIn && <SignIn setShowSignIn={setShowSignIn} setShowSignUp={setShowSignUp} baseUrl={baseUrl}/>}
       {showSignUp && <SignUp setShowSignUp={setShowSignUp} setShowSignIn={setShowSignIn} baseUrl={baseUrl}/>}
-      {showPlaceBet && <PlaceBet setShowPlaceBet={setShowPlaceBet}/> }
+      {showPlaceBet && <PlaceBet setShowPlaceBet={setShowPlaceBet} baseUrl={baseUrl}/> }
       
     </div>
   )
