@@ -1,6 +1,6 @@
 import React from 'react'
 
-const PlaceBet = () => {
+const PlaceBet = ({baseUrl}) => {
   return (
     <div>
         <form className="flex items-center justify-center flex-col bg-[#fff] my-[6rem] p-5 mx-auto w-[30%] place-bet-form">

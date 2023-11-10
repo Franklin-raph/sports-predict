@@ -16,6 +16,8 @@ const Home = ({baseUrl}) => {
   const [allMatches, setAllMatches] = useState([])
   const [isLoading, setIsLoading] = useState(false)
 
+  const [teamsOfBet, setTeamsOfBet] = useState("")
+
   useEffect(() => {
     getAllAvailableMatches()
   },[])
@@ -39,16 +41,16 @@ const Home = ({baseUrl}) => {
   return (
     <div>
       <div className="all-games flex items-center justify-center flex-col bg-[#fff] my-[6rem] p-5 mx-auto w-[37%]">
-        <Navbar setShowSignIn={setShowSignIn} setShowSignUp={setShowSignUp}/>
+        <Navbar setShowSignIn={setShowSignIn} setShowSignUp={setShowSignUp} baseUrl={baseUrl}/>
         <div className='w-full'>
           <div className="flex items-center justify-between my-5">
             <h2 className='text-lg font-bold text-[#4F3D3D]'>All Games</h2>
           </div>
           <div className='flex items-center justify-between mt-3'>
             <div className='flex items-center gap-3'>
-              <button className='bg-[#4F3D3D]'>Played</button>
+              <button className='bg-[#4F3D3D]'>All</button>
+              <button className='bg-[#797979]'>Played</button>
               <button className='bg-[#797979]'>Unplayed</button>
-              <button className='bg-[#797979]'>New</button>
             </div>
             <button className='bg-[#4F3D3D]' onClick={() => setShowPlaceBet(true)}>+</button>
           </div>

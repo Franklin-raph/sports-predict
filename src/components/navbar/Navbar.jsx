@@ -1,12 +1,14 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
-const Navbar = ({setShowSignIn, setShowSignUp}) => {
+const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
 
   const navigate = useNavigate()
   const location = useLocation()
   const user = JSON.parse(localStorage.getItem("user"))
   const [userDropDown, setUserDropDown] = useState(false)
+
+  console.log(user.message.userDetails.balance)
 
   function toggleUserDropdown(){
     setUserDropDown(!userDropDown)
@@ -16,6 +18,21 @@ const Navbar = ({setShowSignIn, setShowSignUp}) => {
     localStorage.clear()
     // window.location.reload()
     window.location.href = "/"
+  }
+
+  useEffect(() => {
+    getUserBalance()
+  },[])
+
+  async function getUserBalance(){
+    const response = await fetch(`${baseUrl}/user/check-balance`,{
+      method:"GET",
+      headers:{
+        Authorization: `Bearer ${user.token}`
+      }
+    })
+    const data = await response.json()
+    console.log(response, data)
   }
 
   return (
@@ -40,7 +57,7 @@ const Navbar = ({setShowSignIn, setShowSignUp}) => {
               <i class="ri-menu-line text-lg cursor-pointer" onClick={() => toggleUserDropdown()}></i>
             </div>
             <div className='mt-[3rem] flex items-end justify-end gap-[20px]'>
-              <p>#50,000</p>
+              <p>${user.message.userDetails.balance}</p>
             </div>
           </div>
         }
