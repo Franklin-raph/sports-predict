@@ -11,6 +11,8 @@ const SignUp = ({setShowSignUp, setShowSignIn, baseUrl}) => {
     const [error, setError] = useState(false)
     const [verifyModal, setVerifyModal] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const [isVerifyLoading, setIsVerifyLoading] = useState(false)
+    const [verificationCode, setVerificationCode] = useState("")
     console.log(isLoading)
 
     function closeSigUp(){
@@ -50,6 +52,11 @@ const SignUp = ({setShowSignUp, setShowSignIn, baseUrl}) => {
             
             // localStorage.setItem("user", JSON.stringify(email))
         }
+    }
+
+    async function verifyAccount(){
+        if(!verificationCode) setError("Please ")
+        setIsVerifyLoading(true)
     }
 
   return (
@@ -97,12 +104,8 @@ const SignUp = ({setShowSignUp, setShowSignIn, baseUrl}) => {
                 <div className='verify-account sign-up-form relative'>
                 <i className="ri-close-fill absolute right-2 top-2 text-2xl text-[#4F3D3D] hover:text-gray-500 cursor-pointer" onClick={() => setVerifyModal(false)}></i>
                     <h1 className='font-bold text-lg'>Verifying your account</h1>
-                    <input type="email" placeholder='1234' className='py-1 px-2 mt-6'/>
+                    <input type="email" placeholder='1234' className='py-1 px-2 mt-6' onChange={e => setVerificationCode(e.target.value)}/>
                     <ul className='text-left mt-5 flex flex-col gap-2'>
-                        <li className='flex items-center gap-2'>
-                            <span className='p-2 bg-gray-400 rounded-full'></span>
-                            <p className='text-sm'>Tap on the box below to copy the unique ID</p>
-                        </li>
                         <li className='flex items-center gap-2'>
                             <span className='p-2 bg-gray-400 rounded-full'></span>
                             <p className='text-sm'>Tap <span className='underline'>here</span> to start telegram authentication </p>
@@ -111,6 +114,19 @@ const SignUp = ({setShowSignUp, setShowSignIn, baseUrl}) => {
                             <span className='p-2 bg-gray-400 rounded-full'></span>
                             <p className='text-sm'>Verify your unique ID on our telegram bot</p>
                         </li>
+                        <li className='flex items-center gap-2'>
+                            <span className='p-2 bg-gray-400 rounded-full'></span>
+                            <p className='text-sm'>Type in the unique ID in the input box above and click on verify</p>
+                        </li>
+                        {isVerifyLoading ?
+                            <button className="bg-[#4F3D3D] mt-3 text-white mb-2 py-2 w-full rounded-md cursor-not-allowed">
+                                <i class="fa-solid fa-gear fa-spin"></i>
+                            </button>
+                            :
+                            <button type="submit" disabled={isVerifyLoading} onClick={verifyAccount} className="bg-[#4F3D3D] mt-3 text-white mb-2 py-2 cursor-pointer w-full rounded-md">
+                                Verify Account
+                            </button>
+                        }
                     </ul>
                 </div>
             </div>

@@ -94,7 +94,7 @@ const PlaceBet = ({baseUrl, setShowPlaceBet}) => {
                 <div className='h-[30vh] shadow-2xl overflow-x-hidden p-3'>
                     <input type="text" placeholder='Search' onChange={e => setSearchTerm(e.target.value)}/>
                     <div>
-                    {arr && arr.filter((game) => {
+                    {allMatches && allMatches.filter((game) => {
                     if(searchTerm === "") return game
                     else if (game.team1.toLowerCase().includes(searchTerm.toLowerCase()) || game.team2.toLowerCase().includes(searchTerm.toLowerCase())) return game
                     }).map(game => (
@@ -115,10 +115,10 @@ const PlaceBet = ({baseUrl, setShowPlaceBet}) => {
                     <i class="ri-arrow-down-s-fill"></i>
                 </div>
             </div>
-            <div>
+            {/* <div>
                 <label>Password</label>
                 <input type="password" placeholder='****' />
-            </div>
+            </div> */}
             {/* <input type="button" value="Place Bet" className="bg-[#4F3D3D] mt-3 text-white mb-2 py-2 cursor-pointer" onClick={placeBet}/> */}
             {isLoading ?
                 <button className="bg-[#4F3D3D] mt-3 text-white mb-2 py-2 w-full rounded-md cursor-not-allowed">

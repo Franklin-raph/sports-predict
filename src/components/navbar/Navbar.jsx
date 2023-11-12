@@ -51,13 +51,13 @@ const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
             <div className='flex items-center justify-between'>
               <div className='flex items-center gap-2'>
                 <i class="ri-user-3-line text-lg cursor-pointer" onClick={() => toggleUserDropdown()}></i>
-                <p>{userBalance && userBalance}</p>
+                <p>{user.message.userDetails.username}</p>
                 {/* <p>{user.message.userDetails.username}</p> */}
               </div>
               <i class="ri-menu-line text-lg cursor-pointer" onClick={() => toggleUserDropdown()}></i>
             </div>
             <div className='mt-[3rem] flex items-end justify-end gap-[20px]'>
-              <p>${user.message.userDetails.balance}</p>
+              <p>${userBalance && userBalance.message}</p>
             </div>
           </div>
         }

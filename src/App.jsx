@@ -23,9 +23,9 @@ function App() {
       {/* <Navbar /> */}
       <Routes>
         <Route path='/' element={<Home baseUrl={baseUrl}/>}/>
-        <Route path='/settings' element={<Settings />}/>
-        <Route path='/rankings' element={<Rankings />}/>
-        <Route path='/contact-us' element={<ContactUs />}/>
+        <Route path='/settings' element={<Settings baseUrl={baseUrl}/>}/>
+        <Route path='/rankings' element={<Rankings baseUrl={baseUrl}/>}/>
+        <Route path='/contact-us' element={<ContactUs baseUrl={baseUrl}/>}/>
       </Routes>
       <button className='fixed bottom-5 right-5 bg-[#4F3D3D] px-2 py-1 text-xl text-white rounded-md' onClick={() => scrollToTop()}><i class="ri-arrow-up-double-fill"></i></button>
     </BrowserRouter>
