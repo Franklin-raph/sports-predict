@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../../components/navbar/Navbar'
 import { useNavigate } from 'react-router-dom'
 
-const ContactUs = () => {
+const ContactUs = ({baseUrl}) => {
     const [showSignIn, setShowSignIn] = useState(false)
     const user = localStorage.getItem("user")
     const navigate = useNavigate()
@@ -20,6 +20,25 @@ const ContactUs = () => {
             <div className="w-full">
                 <div className="flex items-center justify-between my-5">
                     <h2 className='text-lg font-bold text-[#4F3D3D]'>Contact Us</h2>
+                </div>
+                <div>
+                    <p className='text-center'>You can contact us via our</p>
+                    <div className='mt-5 text-[14px] text-[#4F3D3D]'>
+                        <div>
+                            <div className='flex items-center justify-between'>
+                                <h1 className='text-bold mb-2'>Telegram Channel</h1>
+                                <i class="ri-telegram-fill text-[20px]"></i>
+                            </div>
+                            <a href="#">telegram Link</a>
+                        </div>
+                        <div className='mt-5'>
+                            <div className='flex items-center justify-between'>
+                                <h1 className='text-bold mb-2'>Facebook</h1>
+                                <i class="ri-facebook-circle-fill text-[20px]"></i>
+                            </div>
+                            <a href="#">facebook Link</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

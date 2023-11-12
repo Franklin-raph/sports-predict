@@ -16,8 +16,6 @@ const Home = ({baseUrl}) => {
   const [allMatches, setAllMatches] = useState([])
   const [isLoading, setIsLoading] = useState(false)
 
-  const [teamsOfBet, setTeamsOfBet] = useState("")
-
   useEffect(() => {
     getAllAvailableMatches()
   },[])

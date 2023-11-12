@@ -2,11 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-form label {
+form label, .settings label {
     @apply block
 }
 
-form input, .verify-account input{
+form input, .verify-account input, .settings input{
     @apply outline-none px-2 py-1 rounded-md border border-gray-300
 }
 
@@ -24,4 +24,8 @@ form input, .verify-account input{
 
 .all-games button{
     @apply px-2 py-1 text-white rounded text-[16px]
+}
+
+.tab-btns p{
+    @apply cursor-pointer text-black px-2 py-1 rounded-sm
 }

@@ -14,7 +14,7 @@ const PlaceBet = ({baseUrl, setShowPlaceBet}) => {
   const [selectedGame, setSelectedGame] = useState("Select game to predict on")
 
   async function getAllAvailableGames(){
-    setIsLoading(true)
+    // setIsLoading(true)
     const response = await fetch(`${baseUrl}/get/matches`,{
       method:"GET",
       headers:{
@@ -23,7 +23,7 @@ const PlaceBet = ({baseUrl, setShowPlaceBet}) => {
     })
     const data = await response.json()
     if(response.ok){
-      setIsLoading(false)
+      // setIsLoading(false)
       setAllMatches(data.message)
     }
     console.log(response, data)
@@ -94,10 +94,10 @@ const PlaceBet = ({baseUrl, setShowPlaceBet}) => {
                 <div className='h-[30vh] shadow-2xl overflow-x-hidden p-3'>
                     <input type="text" placeholder='Search' onChange={e => setSearchTerm(e.target.value)}/>
                     <div>
-                        {arr && arr.filter(game => 
-                          game.team1.toLowerCase().includes(searchTerm) || 
-                          game.team2.toLowerCase().includes(searchTerm))
-                          .map(game => (
+                    {arr && arr.filter((game) => {
+                    if(searchTerm === "") return game
+                    else if (game.team1.toLowerCase().includes(searchTerm.toLowerCase()) || game.team2.toLowerCase().includes(searchTerm.toLowerCase())) return game
+                    }).map(game => (
                             <div className='flex items-center gap-3 justify-center py-1 text-[14px] pb-2' onClick={() => playSelectedGame(game.team1, game.team2)} style={{ borderBottom:"1px solid #ccc" }}>
                                 <p>{game.team1}</p>
                                 <span>VS</span>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../../components/navbar/Navbar'
 import { useNavigate } from 'react-router-dom'
 
-const Rankings = () => {
+const Rankings = ({baseUrl}) => {
     const [showSignIn, setShowSignIn] = useState(false)
     const navigate = useNavigate()
     const user = localStorage.getItem("user")

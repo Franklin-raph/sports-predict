@@ -87,6 +87,11 @@ nav ul li{
     position: relative;
 } */
 
+.active-tab{
+    color: white !important;
+    background-color: #4F3D3D;
+}
+
 @media screen and (max-width:1024px) {
     .all-games, .place-bet-form, .sign-up-form, .error-modal{
         width: 60% !important;

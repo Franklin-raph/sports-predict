@@ -7,8 +7,7 @@ const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
   const location = useLocation()
   const user = JSON.parse(localStorage.getItem("user"))
   const [userDropDown, setUserDropDown] = useState(false)
-
-  console.log(user.message.userDetails.balance)
+  const [userBalance, setUserBalance] = useState()
 
   function toggleUserDropdown(){
     setUserDropDown(!userDropDown)
@@ -32,6 +31,7 @@ const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
       }
     })
     const data = await response.json()
+    setUserBalance(data.message)
     console.log(response, data)
   }
 
@@ -51,7 +51,7 @@ const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
             <div className='flex items-center justify-between'>
               <div className='flex items-center gap-2'>
                 <i class="ri-user-3-line text-lg cursor-pointer" onClick={() => toggleUserDropdown()}></i>
-                <p>{user.message.userDetails.username}</p>
+                <p>{userBalance && userBalance}</p>
                 {/* <p>{user.message.userDetails.username}</p> */}
               </div>
               <i class="ri-menu-line text-lg cursor-pointer" onClick={() => toggleUserDropdown()}></i>
