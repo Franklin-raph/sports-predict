@@ -11,7 +11,9 @@ const PlaceBet = ({baseUrl, setShowPlaceBet}) => {
   const [isLoading, setIsLoading] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
   const [showGames, setShowGames] = useState(false)
+  const [showOutcomes, setShowOutcomes] = useState(false)
   const [selectedGame, setSelectedGame] = useState("Select game to predict on")
+  const [selectedOutcome, setSelectedOutcome] = useState("Predict game outcome")
 
   async function getAllAvailableGames(){
     // setIsLoading(true)
@@ -50,8 +52,26 @@ const PlaceBet = ({baseUrl, setShowPlaceBet}) => {
     },
   ]
 
+  const gameOutcomes = [
+    "home-win",
+    "away-win",
+    "draw",
+    "home-win/draw",
+    "away-win/draw",
+    "over-3.5",
+    "under-3.5",
+    "home&over-1.5",
+    "away&over-1.5",
+    "goal-goal",
+    "no-goal-goal"
+    ]
+
   function playSelectedGame(team1, team2){
     setSelectedGame(`${team1} vs ${team2}`)
+  }
+
+  function playSelectedOutcome(predictedOutcome){
+    setSelectedOutcome(predictedOutcome)
   }
 
 //   {
@@ -94,7 +114,7 @@ const PlaceBet = ({baseUrl, setShowPlaceBet}) => {
                 <div className='h-[30vh] shadow-2xl overflow-x-hidden p-3'>
                     <input type="text" placeholder='Search' onChange={e => setSearchTerm(e.target.value)}/>
                     <div>
-                    {allMatches && allMatches.filter((game) => {
+                    {arr && arr.filter((game) => {
                     if(searchTerm === "") return game
                     else if (game.team1.toLowerCase().includes(searchTerm.toLowerCase()) || game.team2.toLowerCase().includes(searchTerm.toLowerCase())) return game
                     }).map(game => (
@@ -110,10 +130,25 @@ const PlaceBet = ({baseUrl, setShowPlaceBet}) => {
             </div>
             <div>
                 <label>Predict game outcome</label>
-                <div className='flex justify-between items-center bg-[#eee] px-2 py-2 text-sm rounded-md cursor-pointer' style={{ margin:"2px 0" }}>
-                    <p>Predict game outcome</p>
+                <div onClick={() => setShowOutcomes(!showOutcomes)} className='flex justify-between items-center bg-[#eee] px-2 py-2 text-sm rounded-md cursor-pointer' style={{ margin:"2px 0" }}>
+                    <p>{selectedOutcome}</p>
                     <i class="ri-arrow-down-s-fill"></i>
                 </div>
+                {showOutcomes && 
+                <div className='h-[30vh] shadow-2xl overflow-x-hidden p-3'>
+                    {/* <input type="text" placeholder='Search' onChange={e => setSearchTerm(e.target.value)}/> */}
+                    <div>
+                      {gameOutcomes && gameOutcomes.filter((outcome) => {
+                      if(searchTerm === "") return outcome
+                      else if (outcome.toLowerCase().includes(searchTerm.toLowerCase()) || outcome.toLowerCase().includes(searchTerm.toLowerCase())) return outcome
+                      }).map(outcome => (
+                            <div className='flex items-center gap-3 justify-center py-1 text-[14px] pb-2' onClick={() => playSelectedOutcome(outcome)} style={{ borderBottom:"1px solid #ccc" }}>
+                                <p className='cursor-pointer'>{outcome}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                }
             </div>
             {/* <div>
                 <label>Password</label>
