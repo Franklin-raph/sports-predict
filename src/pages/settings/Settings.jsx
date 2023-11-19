@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from '../../components/navbar/Navbar'
 import { useNavigate } from 'react-router-dom'
+import ErrorAlert from '../../components/alert/error-alert/ErrorAlert'
+import SuccessAlert from '../../components/alert/success-alert/SuccessAlert'
 
 const Settings = ({baseUrl}) => {
-    const user = localStorage.getItem("user")
+    const user = JSON.parse(localStorage.getItem("user"))
     const [showSignIn, setShowSignIn] = useState(false)
     const [email, setEmail] = useState("")
     const [phone, setPhone] = useState("")
@@ -16,16 +18,86 @@ const Settings = ({baseUrl}) => {
     const [accountNumber, setAccountNumber] = useState("")
     const tabsArray = ["User Info", "Security", "Account Info"]
     const [activeTab, setActiveTab] = useState(tabsArray[0])
+    const [error, setError] = useState(false)
+    const [success, setSuccess] = useState(false)
     const navigate = useNavigate()
 
     useEffect(() => {
         if(!user) {
             navigate("/")
         }
+        setEmail(user.message.userDetails.email)
     },[])
 
     function handleTabClick(tab){
         setActiveTab(tab);
+    }
+
+    async function updateAccountUserInfo(){
+        console.log(JSON.stringify({email, phoneNumber:phone}), user)
+        // if(!email )
+        setIsLoading(true)
+        const response = await fetch(`${baseUrl}/user/update-details/userInfo`,{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json",
+                Authorization:`Bearer ${user.token}`
+            },
+            body: JSON.stringify({email, phoneNumber:phone})
+        })
+        if(response) setIsLoading(false)
+        const data = await response.json()
+        console.log(response, data)
+    }
+
+    async function updateAccountSecurityInfo(){
+        if(!oldPassword || !newPassword || !confirmPassword){
+            setError("Please fill in all fields")
+        }else if(newPassword !== confirmPassword){
+            setError("New password and confirm password field must match")
+        }else{
+            console.log(JSON.stringify({oldpassword:oldPassword, newpassword:newPassword}))
+            setIsLoading(true)
+            const response = await fetch(`${baseUrl}/user/update-details/security`,{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json",
+                    Authorization:`Bearer ${user.token}`
+                },
+                body: JSON.stringify({oldpassword:oldPassword, newpassword:newPassword})
+            })
+            if(response) setIsLoading(false)
+            const data = await response.json()
+            if(!response.ok){
+                setError(data.message)
+            }
+            if(response.ok){
+                setSuccess(data.message)
+            }
+            console.log(response, data)
+        }
+    }
+
+    async function updateAccountDetailsInfo(){
+        if(!bank || !accountName || !accountNumber){
+            setError("Please fill in all fields")
+        }else{
+            setIsLoading(true)
+            const response = await fetch(`${baseUrl}/user/update-details/accountInfo`,{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json",
+                    Authorization:`Bearer ${user.token}`
+                },
+                body: JSON.stringify({bank, accountName, accountNumber})
+            })
+            if(response) setIsLoading(false)
+            const data = await response.json()
+            if(response.ok){
+                setSuccess(data.message)
+            }
+            console.log(response, data)
+        }
     }
 
   return (
@@ -52,7 +124,7 @@ const Settings = ({baseUrl}) => {
                     <div>
                         <div className='mt-4'>
                             <label>Email</label>
-                            <input type="email" onChange={e => setEmail(e.target.value)} className='w-full' style={{ outline:"none", border:"1px solid balck" }}/>
+                            <input type="email" value={email} onChange={e => setEmail(e.target.value)} className='w-full' style={{ outline:"none", border:"1px solid balck" }}/>
                         </div>
                         <div className='mt-4'>
                             <label>Phone Number</label>
@@ -63,7 +135,7 @@ const Settings = ({baseUrl}) => {
                                 <i class="fa-solid fa-gear fa-spin"></i>
                             </button>
                             :
-                            <button type="submit" disabled={isLoading} className="bg-[#4F3D3D] mt-3 text-white mb-2 py-2 cursor-pointer w-full rounded-md">
+                            <button type="submit" onClick={updateAccountUserInfo} disabled={isLoading} className="bg-[#4F3D3D] mt-3 text-white mb-2 py-2 cursor-pointer w-full rounded-md">
                                 Update
                             </button>
                         }
@@ -89,7 +161,7 @@ const Settings = ({baseUrl}) => {
                                 <i class="fa-solid fa-gear fa-spin"></i>
                             </button>
                             :
-                            <button type="submit" disabled={isLoading} className="bg-[#4F3D3D] mt-3 text-white mb-2 py-2 cursor-pointer w-full rounded-md">
+                            <button type="submit" onClick={updateAccountSecurityInfo} disabled={isLoading} className="bg-[#4F3D3D] mt-3 text-white mb-2 py-2 cursor-pointer w-full rounded-md">
                                 Update Password
                             </button>
                         }
@@ -115,7 +187,7 @@ const Settings = ({baseUrl}) => {
                                 <i class="fa-solid fa-gear fa-spin"></i>
                             </button>
                             :
-                            <button type="submit" disabled={isLoading} className="bg-[#4F3D3D] mt-3 text-white mb-2 py-2 cursor-pointer w-full rounded-md">
+                            <button onClick={updateAccountDetailsInfo} type="submit" disabled={isLoading} className="bg-[#4F3D3D] mt-3 text-white mb-2 py-2 cursor-pointer w-full rounded-md">
                                 Update Account Details
                             </button>
                         }
@@ -123,6 +195,8 @@ const Settings = ({baseUrl}) => {
                 }
             </div>
         </div>
+        {error && <ErrorAlert error={error} setError={setError}/>}
+        {success && <SuccessAlert success={success} setSuccess={setSuccess}/>}
     </div>
   )
 }
