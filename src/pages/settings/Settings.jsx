@@ -27,10 +27,28 @@ const Settings = ({baseUrl}) => {
             navigate("/")
         }
         setEmail(user.message.userDetails.email)
+        getUserDetails()
     },[])
 
     function handleTabClick(tab){
         setActiveTab(tab);
+    }
+
+    async function getUserDetails(){
+        const response = await fetch(`${baseUrl}/user/dynamic-details`,{
+        headers:{
+                Authorization:`Bearer ${user.token}`
+            }
+        })
+        const data = await response.json()
+        if(response.ok){
+            setEmail(data.message.userSbcDetails.email)
+            setBank(data.message.userSbcDetails.bank)
+            setAccountName(data.message.userSbcDetails.accountName)
+            setAccountNumber(data.message.userSbcDetails.accountNumber)
+            console.log(data.message.userSbcDetails.bank)
+        }
+        console.log(data)
     }
 
     async function updateAccountUserInfo(){
@@ -47,6 +65,12 @@ const Settings = ({baseUrl}) => {
         })
         if(response) setIsLoading(false)
         const data = await response.json()
+        if(!response.ok){
+            setError(data.message)
+        }
+        if(response.ok){
+            setSuccess(data.message)
+        }
         console.log(response, data)
     }
 
@@ -93,6 +117,9 @@ const Settings = ({baseUrl}) => {
             })
             if(response) setIsLoading(false)
             const data = await response.json()
+            if(!response.ok){
+                setError(data.message)
+            }
             if(response.ok){
                 setSuccess(data.message)
             }
@@ -172,15 +199,15 @@ const Settings = ({baseUrl}) => {
                     <div>
                         <div className='mt-4'>
                             <label>Bank</label>
-                            <input type="text" onChange={e => setBank(e.target.value)} className='w-full'/>
+                            <input type="text" onChange={e => setBank(e.target.value)} value={bank} className='w-full'/>
                         </div>
                         <div className='mt-4'>
                             <label>Account Name</label>
-                            <input type="text" onChange={e => setAccountName(e.target.value)} className='w-full' style={{ outline:"none", border:"1px solid balck" }}/>
+                            <input type="text" onChange={e => setAccountName(e.target.value)} value={accountName} className='w-full' style={{ outline:"none", border:"1px solid balck" }}/>
                         </div>
                         <div className='mt-4'>
                             <label>Account Number</label>
-                            <input type="number" onChange={e => setAccountNumber(e.target.value)} className='w-full'/>
+                            <input type="number" onChange={e => setAccountNumber(e.target.value)} value={accountNumber} className='w-full'/>
                         </div>
                         {isLoading ?
                             <button className="bg-[#4F3D3D] mt-3 text-white mb-2 py-2 w-full rounded-md cursor-not-allowed">
