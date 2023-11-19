@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'react'
+import ErrorAlert from '../alert/error-alert/ErrorAlert'
 
 const PlaceBet = ({baseUrl, setShowPlaceBet}) => {
 
@@ -14,6 +15,7 @@ const PlaceBet = ({baseUrl, setShowPlaceBet}) => {
   const [showOutcomes, setShowOutcomes] = useState(false)
   const [selectedGame, setSelectedGame] = useState("Select game to predict on")
   const [selectedOutcome, setSelectedOutcome] = useState("Predict game outcome")
+  const [error, setError] = useState(false)
 
   async function getAllAvailableGames(){
     // setIsLoading(true)
@@ -85,17 +87,21 @@ const PlaceBet = ({baseUrl, setShowPlaceBet}) => {
   async function placeBet(e){
     e.preventDefault()
     setIsLoading(true)
-    console.log(JSON.stringify({teamsOfBet:selectedGame, typeOfMarket:"over 2", odd:"1.2", amountToPlay:"1000", bookmaker:"sportyBet"}))
+    console.log(JSON.stringify({teamsOfBet:selectedGame, typeOfMarket:selectedOutcome, odd:"1.2", amountToPlay:"1000", bookmaker:"sportyBet"}))
     const response = await fetch(`${baseUrl}/user/place-bet`,{
       method:"POST",
       headers:{
         "Content-Type": "application/json",
         Authorization: `Bearer ${user.token}`
       },
-      body: JSON.stringify({teamsOfBet:selectedGame, typeOfMarket:"over 2", odd:"1.2", amountToPlay:"1000", bookmaker:"sportyBet"})
+      body: JSON.stringify({teamsOfBet:selectedGame, typeOfMarket:selectedOutcome, odd:"1.2", amountToPlay:"1000", bookmaker:"sportyBet"})
     })
     const data = await response.json()
     if(response) setIsLoading(false)
+    if(!response.ok) {
+      setError(data.message)
+      setTimeout(() => setError(""), 5000)
+    }
     console.log(response, data)
   }
 
@@ -114,7 +120,7 @@ const PlaceBet = ({baseUrl, setShowPlaceBet}) => {
                 <div className='h-[30vh] shadow-2xl overflow-x-hidden p-3'>
                     <input type="text" placeholder='Search' onChange={e => setSearchTerm(e.target.value)}/>
                     <div>
-                    {arr && arr.filter((game) => {
+                    {allMatches && allMatches.filter((game) => {
                     if(searchTerm === "") return game
                     else if (game.team1.toLowerCase().includes(searchTerm.toLowerCase()) || game.team2.toLowerCase().includes(searchTerm.toLowerCase())) return game
                     }).map(game => (
@@ -166,6 +172,7 @@ const PlaceBet = ({baseUrl, setShowPlaceBet}) => {
             }
             <p>For frequently asked question, <span className='underline cursor-pointer'>Tap here</span> </p>
         </form>
+        {error && <ErrorAlert error={error} setError={setError}/> }
     </div>
   )
 }
