@@ -44,14 +44,18 @@ const Home = ({baseUrl}) => {
           <div className="flex items-center justify-between my-5">
             <h2 className='text-lg font-bold text-[#4F3D3D]'>All Games</h2>
           </div>
-          <div className='flex items-center justify-between mt-3'>
-            <div className='flex items-center gap-3'>
-              <button className='bg-[#4F3D3D]'>All</button>
-              <button className='bg-[#797979]'>Played</button>
-              <button className='bg-[#797979]'>Unplayed</button>
+          {user &&
+          <div>
+            <div className='flex items-center justify-between mt-3'>
+              <div className='flex items-center gap-3'>
+                <button className='bg-[#4F3D3D]'>All</button>
+                <button className='bg-[#797979]'>Played</button>
+                <button className='bg-[#797979]'>Unplayed</button>
+              </div>
+              <button className='bg-[#4F3D3D]' onClick={() => setShowPlaceBet(true)}>+</button>
             </div>
-            {user && <button className='bg-[#4F3D3D]' onClick={() => setShowPlaceBet(true)}>+</button>}
           </div>
+          }
           <div className='my-5'>
             {allMatches.map(match => (
               <div className="bg-gray-300 py-4 rounded my-2">
