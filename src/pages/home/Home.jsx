@@ -50,7 +50,7 @@ const Home = ({baseUrl}) => {
               <button className='bg-[#797979]'>Played</button>
               <button className='bg-[#797979]'>Unplayed</button>
             </div>
-            <button className='bg-[#4F3D3D]' onClick={() => setShowPlaceBet(true)}>+</button>
+            {user && <button className='bg-[#4F3D3D]' onClick={() => setShowPlaceBet(true)}>+</button>}
           </div>
           <div className='my-5'>
             {allMatches.map(match => (
