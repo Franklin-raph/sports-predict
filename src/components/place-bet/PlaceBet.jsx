@@ -15,6 +15,9 @@ const PlaceBet = ({baseUrl, setShowPlaceBet}) => {
   const [showOutcomes, setShowOutcomes] = useState(false)
   const [selectedGame, setSelectedGame] = useState("Select game to predict on")
   const [selectedOutcome, setSelectedOutcome] = useState("Predict game outcome")
+  const [amountToPlay, setAmountToPlay] = useState("")
+  const [odd, setOdd] = useState("")
+  const [bookmaker, setBookmaker] = useState("")
   const [error, setError] = useState(false)
 
   async function getAllAvailableGames(){
@@ -86,24 +89,29 @@ const PlaceBet = ({baseUrl, setShowPlaceBet}) => {
 
   async function placeBet(e){
     e.preventDefault()
-    setIsLoading(true)
-    console.log(JSON.stringify({teamsOfBet:selectedGame, typeOfMarket:selectedOutcome, odd:"1.2", amountToPlay:"1000", bookmaker:"sportyBet"}))
-    const response = await fetch(`${baseUrl}/user/place-bet`,{
-      method:"POST",
-      headers:{
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`
-      },
-      body: JSON.stringify({teamsOfBet:selectedGame, typeOfMarket:selectedOutcome, odd:"1.2", amountToPlay:"1000", bookmaker:"sportyBet"})
-    })
-    const data = await response.json()
-    if(response) setIsLoading(false)
-    if(!response.ok) {
-      setError(data.message)
-      setTimeout(() => setError(""), 5000)
+    console.log(JSON.stringify({teamsOfBet:selectedGame, typeOfMarket:selectedOutcome, odd, amountToPlay, bookmaker}))
+    if(!selectedGame || !selectedOutcome || !odd || !amountToPlay || !bookmaker || selectedGame === "Select game to predict on" || selectedOutcome === "Predict game outcome"){
+      setError("Please make sure to fill in all fields")
+    }else{
+      setIsLoading(true)
+      const response = await fetch(`${baseUrl}/user/place-bet`,{
+        method:"POST",
+        headers:{
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`
+        },
+        body: JSON.stringify({teamsOfBet:selectedGame, typeOfMarket:selectedOutcome, odd, amountToPlay, bookmaker})
+      })
+      const data = await response.json()
+      if(response) setIsLoading(false)
+      if(!response.ok) {
+        setError(data.message)
+        setTimeout(() => setError(""), 9000)
+      }
+      console.log(response, data)
     }
-    console.log(response, data)
   }
+
 
   return (
     <div className='modal-bg'>
@@ -156,10 +164,20 @@ const PlaceBet = ({baseUrl, setShowPlaceBet}) => {
                 </div>
                 }
             </div>
-            {/* <div>
-                <label>Password</label>
-                <input type="password" placeholder='****' />
-            </div> */}
+            <div className='flex items-center gap-5'>
+                <div>
+                  <label>Odd</label>
+                  <input type="text" placeholder='2.2' onChange={e => setOdd(e.target.value)}/>
+                </div>
+                <div>
+                  <label>Amount to play</label>
+                  <input type="text" placeholder='$1000' onChange={e => setAmountToPlay(e.target.value)}/>
+                </div>
+            </div>
+            <div>
+              <label>Bookmaker</label>
+              <input type="text" placeholder='Sporty Bet' onChange={e => setBookmaker(e.target.value)}/>
+            </div>
             {/* <input type="button" value="Place Bet" className="bg-[#4F3D3D] mt-3 text-white mb-2 py-2 cursor-pointer" onClick={placeBet}/> */}
             {isLoading ?
                 <button className="bg-[#4F3D3D] mt-3 text-white mb-2 py-2 w-full rounded-md cursor-not-allowed">
@@ -170,7 +188,7 @@ const PlaceBet = ({baseUrl, setShowPlaceBet}) => {
                     Place bet
                 </button>
             }
-            <p>For frequently asked question, <span className='underline cursor-pointer'>Tap here</span> </p>
+            <p className='text-[13px]'>For frequently asked question, <span className='underline cursor-pointer'>Tap here</span> </p>
         </form>
         {error && <ErrorAlert error={error} setError={setError}/> }
     </div>

@@ -11,6 +11,10 @@ html, body{
     padding: 2rem !important;
 }
 
+.modal-bg{
+    z-index: 100;
+}
+
 .modal-bg, .verify-account-bg{
     position: fixed;
     transform: translate(-50%, -50%);

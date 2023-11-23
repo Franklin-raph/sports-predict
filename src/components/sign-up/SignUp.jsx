@@ -31,11 +31,11 @@ const SignUp = ({setShowSignUp, setShowSignIn, baseUrl}) => {
         }else if(password !== confirmPassword){
             setError("Please both password fields must match")
         }else{
-            // console.log(JSON.stringify({email, password, phone, name}))
+            console.log(JSON.stringify({email, password, phone, username:name}))
             setIsLoading(true)
             const response = await fetch(`${baseUrl}/user/create-account`,{
                 method:"POST",
-                body:JSON.stringify({email, password, phone, username:name}),
+                body:JSON.stringify({email, password, phoneNumber:phone, username:name}),
                 headers:{
                     "Content-Type":"application/json"
                 }
@@ -45,9 +45,10 @@ const SignUp = ({setShowSignUp, setShowSignIn, baseUrl}) => {
             if(response) setIsLoading(false)
             if(response.ok){
                 setVerifyModal(true)
+                localStorage.setItem("username", JSON.stringify(data.message.userDetails.username))
             }
             if(!response.ok){
-                setError(data.message)
+                // setError(data.message)
             }
             
             // localStorage.setItem("user", JSON.stringify(email))
@@ -57,6 +58,30 @@ const SignUp = ({setShowSignUp, setShowSignIn, baseUrl}) => {
     async function verifyAccount(){
         if(!verificationCode) setError("Please ")
         setIsVerifyLoading(true)
+    }
+
+    async function verifyAccount(){
+        console.log(JSON.stringify({username:JSON.parse(localStorage.getItem("username")), code:verificationCode}))
+        console.log(verificationCode)
+        if(verificationCode === ""){
+            setError("Please fill in the verification code")
+            return
+        }else{
+            setIsVerifyLoading(true)
+            const response = await fetch(`${baseUrl}/user/verify-code`, {
+                method:"POST",
+                headers: {
+                    "Content-Type":"application/json"
+                },
+                body: JSON.stringify({username:JSON.parse(localStorage.getItem("username")), code:verificationCode})
+            })
+            const data = await response.json()
+            if(response) setIsVerifyLoading(false)
+            if(!response.ok){
+                setError(data.message)
+            }
+            console.log(response, data)
+        }
     }
 
   return (
