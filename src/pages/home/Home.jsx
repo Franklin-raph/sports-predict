@@ -15,6 +15,8 @@ const Home = ({baseUrl}) => {
   const [showPlaceBet, setShowPlaceBet] = useState(false)
   const [allMatches, setAllMatches] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const homeTabs =  ["All", "Played", "Unplayed"]
+  const [activeTab, setActiveTab] = useState(homeTabs[0])
 
   useEffect(() => {
     getAllAvailableMatches()
@@ -36,6 +38,10 @@ const Home = ({baseUrl}) => {
     console.log(response, data)
   }
 
+  const handleTabClick = (tab) => {
+    setActiveTab(tab)
+  }
+
   return (
     <div>
       <div className="all-games flex items-center justify-center flex-col bg-[#fff] my-[6rem] p-5 mx-auto w-[37%]">
@@ -48,16 +54,40 @@ const Home = ({baseUrl}) => {
           <div>
             <div className='flex items-center justify-between mt-3'>
               <div className='flex items-center gap-3'>
-                <button className='bg-[#4F3D3D]'>All</button>
-                <button className='bg-[#797979]'>Played</button>
-                <button className='bg-[#797979]'>Unplayed</button>
+                {homeTabs.map((tab, index) => 
+                  <button
+                      key={index}
+                      className={`home-tab ${activeTab === tab ? 'active-tab' : ''}`}
+                      onClick={() => handleTabClick(tab)}
+                  >{tab}
+                  </button>
+                )}
+                {/* <button className='bg-[#797979]'>Played</button>
+                <button className='bg-[#797979]'>Unplayed</button> */}
               </div>
               <button className='bg-[#4F3D3D]' onClick={() => setShowPlaceBet(true)}>+</button>
             </div>
           </div>
           }
           <div className='my-5'>
-            {allMatches.map(match => (
+            {
+              activeTab === "All" && (
+                <div>
+                  {allMatches.map(match => (
+                    <div className="bg-gray-300 py-4 rounded my-2">
+                      {/* <p className='text-center mb-3'>{match.league}</p> */}
+                      <div className='flex items-center gap-3 justify-center'>
+                        <p>{match.team1}</p>
+                        <span>VS</span>
+                        <p>{match.team2}</p>
+                      </div>
+                      {/* <p className='text-center mt-3'>{match.time}</p> */}
+                    </div>
+                  ))}
+                </div>
+              )
+            }
+            {/* {allMatches.map(match => (
               <div className="bg-gray-300 py-4 rounded my-2">
                 <p className='text-center mb-3'>{match.league}</p>
                 <div className='flex items-center gap-3 justify-center'>
@@ -67,7 +97,52 @@ const Home = ({baseUrl}) => {
                 </div>
                 <p className='text-center mt-3'>{match.time}</p>
               </div>
-            ))}
+            ))} */}
+            
+          </div>
+          <div className='my-5'>
+            {
+              activeTab === "Played" && (
+                <div>
+                  All played games
+                </div>
+              )
+            }
+            {/* {allMatches.map(match => (
+              <div className="bg-gray-300 py-4 rounded my-2">
+                <p className='text-center mb-3'>{match.league}</p>
+                <div className='flex items-center gap-3 justify-center'>
+                  <p>{match.team1}</p>
+                  <span>VS</span>
+                  <p>{match.team2}</p>
+                </div>
+                <p className='text-center mt-3'>{match.time}</p>
+              </div>
+            ))} */}
+            
+          </div>
+          <div className='my-5'>
+            {
+              activeTab === "Unplayed" && (
+                <div>
+                  All unplayed games
+                </div>
+              )
+            }
+            {/* {allMatches.map(match => (
+              <div className="bg-gray-300 py-4 rounded my-2">
+                <p className='text-center mb-3'>{match.league}</p>
+                <div className='flex items-center gap-3 justify-center'>
+                  <p>{match.team1}</p>
+                  <span>VS</span>
+                  <p>{match.team2}</p>
+                </div>
+                <p className='text-center mt-3'>{match.time}</p>
+              </div>
+            ))} */}
+            
+          </div>
+          <div className="my-5">
             {isLoading &&
               <div>
                 <div className="bg-gray-300 py-4 rounded my-2 animated-background"></div>
@@ -77,7 +152,6 @@ const Home = ({baseUrl}) => {
                 <div className="bg-gray-300 py-4 rounded my-2 animated-background"></div>
               </div>
             }
-            
           </div>
         </div>
       </div>

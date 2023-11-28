@@ -49,9 +49,9 @@ const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
         {user && 
           <div className='bg-[#4f3d3d] text-white w-full text-center rounded-[10px] mb-5 p-4'>
             <div className='flex items-center justify-between'>
-              <div className='flex items-center gap-2'>
+              <div className='flex items-center gap-2 font-bold'>
                 <i class="ri-user-3-line text-lg cursor-pointer" onClick={() => toggleUserDropdown()}></i>
-                <p>{user.message.userDetails.username}</p>
+                <p className='uppercase'>{user.message.userDetails.username}</p>
                 {/* <p>{user.message.userDetails.username}</p> */}
               </div>
               <i class="ri-menu-line text-lg cursor-pointer" onClick={() => toggleUserDropdown()}></i>

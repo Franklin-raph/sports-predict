@@ -11,6 +11,7 @@ const PlaceBet = ({baseUrl, setShowPlaceBet}) => {
   const user = JSON.parse(localStorage.getItem("user"))
   const [isLoading, setIsLoading] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
+  const [image, setImage] = useState(null)
   const [showGames, setShowGames] = useState(false)
   const [showOutcomes, setShowOutcomes] = useState(false)
   const [selectedGame, setSelectedGame] = useState("Select game to predict on")
@@ -36,7 +37,7 @@ const PlaceBet = ({baseUrl, setShowPlaceBet}) => {
     console.log(response, data)
   }
 
-  console.log(searchTerm)
+  // console.log(searchTerm)
 
   const arr = [
     {
@@ -87,35 +88,52 @@ const PlaceBet = ({baseUrl, setShowPlaceBet}) => {
 //     "bookmaker": "sportyBet"
 // }
 
+const hanleFileInput = (e) => {
+  e.preventDefault()
+  console.log(e.target.files[0])
+  setImage(e.target.files[0])
+}
+
   async function placeBet(e){
     e.preventDefault()
     console.log(JSON.stringify({teamsOfBet:selectedGame, typeOfMarket:selectedOutcome, odd, amountToPlay, bookmaker}))
-    if(!selectedGame || !selectedOutcome || !odd || !amountToPlay || !bookmaker || selectedGame === "Select game to predict on" || selectedOutcome === "Predict game outcome"){
+    if(!selectedGame || !selectedOutcome || !odd || !amountToPlay || !bookmaker || selectedGame === "Select game to predict on" || selectedOutcome === "Predict game outcome" || !image){
       setError("Please make sure to fill in all fields")
     }else{
+      const formData = new FormData()
+      formData.append("image", image)
+      formData.append("teamsOfBet", selectedGame)
+      formData.append("typeOfMarket", selectedOutcome)
+      formData.append("odd", odd)
+      formData.append("amountToPlay", amountToPlay)
+      formData.append("bookmaker", bookmaker)
+      console.log(formData)
       setIsLoading(true)
       const response = await fetch(`${baseUrl}/user/place-bet`,{
         method:"POST",
         headers:{
-          "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`
         },
-        body: JSON.stringify({teamsOfBet:selectedGame, typeOfMarket:selectedOutcome, odd, amountToPlay, bookmaker})
+        body: formData
       })
       const data = await response.json()
+      console.log(response, data)
       if(response) setIsLoading(false)
-      if(!response.ok) {
+      if(response.status === 500) {
+        setError(data.message.error)
+        setTimeout(() => setError(""), 9000)
+      }
+      if(response.status === 403) {
         setError(data.message)
         setTimeout(() => setError(""), 9000)
       }
-      console.log(response, data)
     }
   }
 
 
   return (
     <div className='modal-bg'>
-        <form className="flex items-center justify-center flex-col bg-[#fff] my-[4rem] p-5 mx-auto w-[30%] place-bet-form relative">
+        <form onSubmit={placeBet} className="flex items-center justify-center flex-col bg-[#fff] my-[2rem] p-5 mx-auto w-[30%] place-bet-form relative">
         <i className="ri-close-fill absolute right-2 top-2 text-2xl text-[#4F3D3D] hover:text-gray-500 cursor-pointer" onClick={() => setShowPlaceBet()}></i>
             <h2 className="font-bold text-lg mb-6">Create New Bet</h2>
             <div className='cursor-pointer'>
@@ -178,13 +196,18 @@ const PlaceBet = ({baseUrl, setShowPlaceBet}) => {
               <label>Bookmaker</label>
               <input type="text" placeholder='Sporty Bet' onChange={e => setBookmaker(e.target.value)}/>
             </div>
+            <div>
+              <label>Game Picture</label>
+              <input type="file" placeholder='Sporty Bet' onChange={hanleFileInput}/>
+            </div>
+            {/* {image && image.name} */}
             {/* <input type="button" value="Place Bet" className="bg-[#4F3D3D] mt-3 text-white mb-2 py-2 cursor-pointer" onClick={placeBet}/> */}
             {isLoading ?
                 <button className="bg-[#4F3D3D] mt-3 text-white mb-2 py-2 w-full rounded-md cursor-not-allowed">
                     <i class="fa-solid fa-gear fa-spin"></i>
                 </button>
                 :
-                <button type="submit" disabled={isLoading} onClick={placeBet} className="bg-[#4F3D3D] mt-3 text-white mb-2 py-2 cursor-pointer w-full rounded-md">
+                <button type="submit" disabled={isLoading} className="bg-[#4F3D3D] mt-3 text-white mb-2 py-2 cursor-pointer w-full rounded-md">
                     Place bet
                 </button>
             }

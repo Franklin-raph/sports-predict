@@ -90,11 +90,15 @@ nav ul li{
     background-size: 800px 104px;
     position: relative;
 } */
+.home-tab{
+    background-color: #797979;
+}
 
 .active-tab{
     color: white !important;
     background-color: #4F3D3D;
 }
+
 
 @media screen and (max-width:1024px) {
     .all-games, .place-bet-form, .sign-up-form, .error-modal{
