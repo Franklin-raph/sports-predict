@@ -15,7 +15,7 @@ const Home = ({baseUrl}) => {
   const [showPlaceBet, setShowPlaceBet] = useState(false)
   const [allMatches, setAllMatches] = useState()
   const [isLoading, setIsLoading] = useState(false)
-  const homeTabs =  ["All", "Played", "Unplayed"]
+  const homeTabs =  ["All", "Pending", "Completed"]
   const [message, setMessage] = useState("")
   const [gameTabHeading, setGameTabHeading] = useState("All Games")
   const [activeTab, setActiveTab] = useState(homeTabs[0])
@@ -132,7 +132,7 @@ const Home = ({baseUrl}) => {
                         <span>VS</span>
                         <p>{match.team2}</p>
                       </div>
-                      {/* <p className='text-center mt-3'>{match.time}</p> */}
+                      <p className='text-center mt-3'>{match.time}</p>
                     </div>
                   ))}
                 </div>
