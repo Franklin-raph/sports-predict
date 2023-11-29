@@ -8,6 +8,7 @@ const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
   const user = JSON.parse(localStorage.getItem("user"))
   const [userDropDown, setUserDropDown] = useState(false)
   const [userBalance, setUserBalance] = useState()
+  const [loading, setLoading] = useState(false)
 
   function toggleUserDropdown(){
     setUserDropDown(!userDropDown)
@@ -20,10 +21,13 @@ const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
   }
 
   useEffect(() => {
-    getUserBalance()
+    // if(user){
+      getUserBalance()
+    // }
   },[])
 
   async function getUserBalance(){
+    setLoading(true)
     const response = await fetch(`${baseUrl}/user/check-balance`,{
       method:"GET",
       headers:{
@@ -31,6 +35,7 @@ const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
       }
     })
     const data = await response.json()
+    setLoading(false)
     setUserBalance(data.message)
     console.log(response, data)
   }
@@ -57,7 +62,11 @@ const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
               <i class="ri-menu-line text-lg cursor-pointer" onClick={() => toggleUserDropdown()}></i>
             </div>
             <div className='mt-[3rem] flex items-end justify-end gap-[20px]'>
+              {loading ? 
+              <i class="fa-solid fa-spinner fa-spin"></i>
+              :
               <p>${userBalance && userBalance.message}</p>
+              }
             </div>
           </div>
         }

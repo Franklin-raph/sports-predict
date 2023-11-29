@@ -13,9 +13,11 @@ const Home = ({baseUrl}) => {
   const [showSignIn, setShowSignIn] = useState(false)
   const [showSignUp, setShowSignUp] = useState(false)
   const [showPlaceBet, setShowPlaceBet] = useState(false)
-  const [allMatches, setAllMatches] = useState([])
+  const [allMatches, setAllMatches] = useState()
   const [isLoading, setIsLoading] = useState(false)
   const homeTabs =  ["All", "Played", "Unplayed"]
+  const [message, setMessage] = useState("")
+  const [gameTabHeading, setGameTabHeading] = useState("All Games")
   const [activeTab, setActiveTab] = useState(homeTabs[0])
 
   useEffect(() => {
@@ -37,10 +39,59 @@ const Home = ({baseUrl}) => {
     }
     console.log(response, data)
   }
-
+  
   const handleTabClick = (tab) => {
     setActiveTab(tab)
+    if(tab === "All"){
+      setGameTabHeading("All Games")
+      setMessage("")
+      getAllAvailableMatches()
+    }
+    if(tab === "Played"){
+      setGameTabHeading("Played Games")
+      playedMatches()
+    }
+    if(tab === "Unplayed"){
+      setGameTabHeading("Unplayed Games")
+      unPlayedMatches()
+    }
   }
+  
+  const playedMatches = async () => {
+    console.log("Played")
+    setAllMatches([])
+    setIsLoading(true)
+    const response = await fetch(`${baseUrl}/user/dynamic-details`, {
+      method:"GET",
+      headers:{
+        Authorization: `Bearer ${user.token}`
+      }
+    })
+    if(response) setIsLoading(false)
+    const data = await response.json()
+    if(response.ok){
+      setAllMatches(data.message.userGamesDetails.allPlacedGames)
+    }
+    if(data.message.userGamesDetails.allPlacedGames.length === 0){
+      setMessage("You currently do not have any played games yet")
+    }
+    console.log(data)
+  }
+
+  const unPlayedMatches = async () => {
+    console.log("Played")
+    setIsLoading(true)
+    const response = await fetch(`${baseUrl}/user/dynamic-details`, {
+      method:"GET",
+      headers:{
+        Authorization: `Bearer ${user.token}`
+      }
+    })
+    if(response) setIsLoading(false)
+    const data = await response.json()
+    console.log(data)
+  }
+
 
   return (
     <div>
@@ -48,7 +99,7 @@ const Home = ({baseUrl}) => {
         <Navbar setShowSignIn={setShowSignIn} setShowSignUp={setShowSignUp} baseUrl={baseUrl}/>
         <div className='w-full'>
           <div className="flex items-center justify-between my-5">
-            <h2 className='text-lg font-bold text-[#4F3D3D]'>All Games</h2>
+            <h2 className='text-lg font-bold text-[#4F3D3D]'>{gameTabHeading}</h2>
           </div>
           {user &&
           <div>
@@ -73,8 +124,8 @@ const Home = ({baseUrl}) => {
             {
               activeTab === "All" && (
                 <div>
-                  {allMatches.map(match => (
-                    <div className="bg-gray-300 py-4 rounded my-2">
+                  {allMatches && allMatches.map(match => (
+                    <div className="bg-gray-300 py-3 rounded my-2">
                       {/* <p className='text-center mb-3'>{match.league}</p> */}
                       <div className='flex items-center gap-3 justify-center'>
                         <p>{match.team1}</p>
@@ -104,7 +155,18 @@ const Home = ({baseUrl}) => {
             {
               activeTab === "Played" && (
                 <div>
-                  All played games
+                  {message && <p className='text-center'>{message}</p> }
+                  {allMatches && allMatches.map(match => (
+                    <div className="bg-gray-300 py-4 rounded my-2">
+                      {/* <p className='text-center mb-3'>{match.league}</p> */}
+                      <div className='flex items-center gap-3 justify-center'>
+                        <p>{match.team1}</p>
+                        <span>VS</span>
+                        <p>{match.team2}</p>
+                      </div>
+                      {/* <p className='text-center mt-3'>{match.time}</p> */}
+                    </div>
+                  ))}
                 </div>
               )
             }
@@ -125,7 +187,7 @@ const Home = ({baseUrl}) => {
             {
               activeTab === "Unplayed" && (
                 <div>
-                  All unplayed games
+                  dey what? dey play :)
                 </div>
               )
             }

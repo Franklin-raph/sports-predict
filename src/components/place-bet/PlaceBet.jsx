@@ -37,27 +37,6 @@ const PlaceBet = ({baseUrl, setShowPlaceBet}) => {
     console.log(response, data)
   }
 
-  // console.log(searchTerm)
-
-  const arr = [
-    {
-      team1:"Nigeria",
-      team2:"USA"
-    },
-    {
-      team1:"Argentina",
-      team2:"Spain"
-    },
-    {
-      team1:"Portugal",
-      team2:"France"
-    },
-    {
-      team1:"Ghana",
-      team2:"Dubai"
-    },
-  ]
-
   const gameOutcomes = [
     "home-win",
     "away-win",
@@ -74,19 +53,13 @@ const PlaceBet = ({baseUrl, setShowPlaceBet}) => {
 
   function playSelectedGame(team1, team2){
     setSelectedGame(`${team1} vs ${team2}`)
+    setShowGames(!showGames)
   }
 
   function playSelectedOutcome(predictedOutcome){
     setSelectedOutcome(predictedOutcome)
+    setShowOutcomes(!showOutcomes)
   }
-
-//   {
-//     "teamsOfBet": "Brighton - Liverpool",
-//     "typeOfMarket": "over-3.5",
-//     "odd": "4.34",
-//     "amountToPlay": "1000",
-//     "bookmaker": "sportyBet"
-// }
 
 const hanleFileInput = (e) => {
   e.preventDefault()
@@ -135,9 +108,9 @@ const hanleFileInput = (e) => {
     <div className='modal-bg'>
         <form onSubmit={placeBet} className="flex items-center justify-center flex-col bg-[#fff] my-[2rem] p-5 mx-auto w-[30%] place-bet-form relative">
         <i className="ri-close-fill absolute right-2 top-2 text-2xl text-[#4F3D3D] hover:text-gray-500 cursor-pointer" onClick={() => setShowPlaceBet()}></i>
-            <h2 className="font-bold text-lg mb-6">Create New Bet</h2>
+            <h2 className="font-bold text-lg mb-4">Create New Bet</h2>
             <div className='cursor-pointer'>
-                <label onClick={() => console.log(searchTerm)}>Game to predict on</label>
+                <label>Game to predict on</label>
                 <div className='flex justify-between items-center bg-[#eee] px-2 py-2 text-sm rounded-md' style={{ margin:"2px 0" }} onClick={() => setShowGames(!showGames)}>
                     <p>{selectedGame}</p>
                     <i class="ri-arrow-down-s-fill"></i>
@@ -198,7 +171,7 @@ const hanleFileInput = (e) => {
             </div>
             <div>
               <label>Game Picture</label>
-              <input type="file" placeholder='Sporty Bet' onChange={hanleFileInput}/>
+              <input type="file" placeholder='Sporty Bet' className='text-sm' onChange={hanleFileInput}/>
             </div>
             {/* {image && image.name} */}
             {/* <input type="button" value="Place Bet" className="bg-[#4F3D3D] mt-3 text-white mb-2 py-2 cursor-pointer" onClick={placeBet}/> */}

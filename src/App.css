@@ -4,6 +4,7 @@
 
 html, body{
     scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 
 .all-games{
@@ -75,7 +76,7 @@ nav ul li{
     background: #D1D5DB;
     background: linear-gradient(to right, #D1D5DB 10%, rgba(87, 66, 66, 0.127) 18%, #D1D5DB 33%);
     background-size: 800px 104px;
-    height: 70px;
+    height: 40px;
     position: relative;
 }
 
