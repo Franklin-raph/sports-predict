@@ -47,12 +47,12 @@ const Home = ({baseUrl}) => {
       setMessage("")
       getAllAvailableMatches()
     }
-    if(tab === "Played"){
-      setGameTabHeading("Played Games")
+    if(tab === "Pending"){
+      setGameTabHeading("Pending Games")
       playedMatches()
     }
-    if(tab === "Unplayed"){
-      setGameTabHeading("Unplayed Games")
+    if(tab === "Completed"){
+      setGameTabHeading("Completed Games")
       unPlayedMatches()
     }
   }
@@ -73,7 +73,7 @@ const Home = ({baseUrl}) => {
       setAllMatches(data.message.userGamesDetails.allPlacedGames)
     }
     if(data.message.userGamesDetails.allPlacedGames.length === 0){
-      setMessage("You currently do not have any played games yet")
+      setMessage("You currently do not have any pending games yet")
     }
     console.log(data)
   }
@@ -125,14 +125,24 @@ const Home = ({baseUrl}) => {
               activeTab === "All" && (
                 <div>
                   {allMatches && allMatches.map(match => (
-                    <div className="bg-gray-300 py-3 rounded my-2">
+                    <div className="bg-gray-200 text-sm py-3 rounded my-2">
                       {/* <p className='text-center mb-3'>{match.league}</p> */}
                       <div className='flex items-center gap-3 justify-center'>
                         <p>{match.team1}</p>
                         <span>VS</span>
                         <p>{match.team2}</p>
                       </div>
-                      <p className='text-center mt-3'>{match.time}</p>
+                      <div className='flex items-center justify-between px-7'>
+                        <div className='flex items-center gap-2 text-[#4F3D3D]'>
+                          <i class="fa-regular fa-clock"></i>
+                          <p className='text-center'>{match.time}</p>
+                        </div>
+                        <div className='flex items-center gap-1'>
+                          <p className='p-[5px] rounded-full bg-red-500'></p>
+                          <p className='p-[5px] rounded-full bg-yellow-500'></p>
+                          <p className='p-[5px] rounded-full bg-green-500'></p>
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -153,7 +163,7 @@ const Home = ({baseUrl}) => {
           </div>
           <div className='my-5'>
             {
-              activeTab === "Played" && (
+              activeTab === "Pending" && (
                 <div>
                   {message && <p className='text-center'>{message}</p> }
                   {allMatches && allMatches.map(match => (
@@ -185,9 +195,9 @@ const Home = ({baseUrl}) => {
           </div>
           <div className='my-5'>
             {
-              activeTab === "Unplayed" && (
+              activeTab === "Completed" && (
                 <div>
-                  <p>No unplayed games yet</p>
+                  <p>No completed games yet</p>
                   {/* dey what? dey play :) */}
                 </div>
               )
