@@ -27,11 +27,11 @@ const ContactUs = ({baseUrl}) => {
                         <div>
                             <div className='flex items-center justify-between'>
                                 <h1 className='text-bold mb-2'>Telegram Channel</h1>
-                                <a href="#" target='_blank'>
+                                <a href="https://t.me/cryptoversity12" target='_blank'>
                                     <i class="ri-telegram-fill text-[20px]"></i>
                                 </a>
                             </div>
-                            <a href="#" target='_blank'>telegram Link</a>
+                            <a href="https://t.me/cryptoversity12" target='_blank'>telegram Link</a>
                         </div>
                         <div className='mt-5'>
                             <div className='flex items-center justify-between'>
