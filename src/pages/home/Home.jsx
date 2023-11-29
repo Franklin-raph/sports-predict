@@ -187,7 +187,8 @@ const Home = ({baseUrl}) => {
             {
               activeTab === "Unplayed" && (
                 <div>
-                  dey what? dey play :)
+                  <p>No unplayed games yet</p>
+                  {/* dey what? dey play :) */}
                 </div>
               )
             }
