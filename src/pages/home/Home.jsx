@@ -8,8 +8,6 @@ import Navbar from '../../components/navbar/Navbar'
 const Home = ({baseUrl}) => {
 
   const user = JSON.parse(localStorage.getItem("user"))
-  const navigate = useNavigate()
-  const location = useLocation()
   const [showSignIn, setShowSignIn] = useState(false)
   const [showSignUp, setShowSignUp] = useState(false)
   const [showPlaceBet, setShowPlaceBet] = useState(false)
@@ -51,12 +49,9 @@ const Home = ({baseUrl}) => {
     }
     if(tab === "Pending"){
       setGameTabHeading("Pending Games")
-      const pendingGames = allMatches
-          .filter(obj => obj.winOrlost === "pending")
-          .map(obj => obj.winOrlost);
+      const pendingGames = allMatches.filter(obj => obj.winOrLost === "pending")
           console.log(pendingGames)
       setPendingGames(pendingGames)
-      // playedMatches()
     }
     if(tab === "Completed"){
       setGameTabHeading("Completed Games")
@@ -120,8 +115,6 @@ const Home = ({baseUrl}) => {
                   >{tab}
                   </button>
                 )}
-                {/* <button className='bg-[#797979]'>Played</button>
-                <button className='bg-[#797979]'>Unplayed</button> */}
               </div>
               <button className='bg-[#4F3D3D]' onClick={() => setShowPlaceBet(true)}>+</button>
             </div>
@@ -134,13 +127,9 @@ const Home = ({baseUrl}) => {
                   {allMatches && allMatches.map(match => (
                     
                     <div className="bg-gray-200 text-sm py-3 rounded my-2">
-                      {console.log(match.winOrlost)}
-                      {/* <p className='text-center mb-3'>{match.league}</p> */}
+                      {console.log(match.winOrLost)}
                       <div className='flex items-center gap-3 justify-center'>
                       <p>{match.teamsOfBet}</p>
-                        {/* <p>{match.team1}</p>
-                        <span>VS</span>
-                        <p>{match.team2}</p> */}
                       </div>
                       <div className='flex items-center justify-between px-7'>
                         <div className='flex items-center gap-2 text-[#4F3D3D]'>
@@ -148,9 +137,9 @@ const Home = ({baseUrl}) => {
                           <p className='text-center'>{match.time}</p>
                         </div>
                         <div className='flex items-center gap-1'>
-                          {match.winOrlost === "won" && <p className='p-[5px] rounded-full bg-green-500'></p>}
-                          {match.winOrlost == undefined && <p className='p-[5px] rounded-full bg-yellow-500'></p>}
-                          {match.winOrlost === "lost" && <p className='p-[5px] rounded-full bg-red-500'></p>}
+                          {match.winOrLost === "won" && <p className='p-[5px] rounded-full bg-green-500'></p>}
+                          {match.winOrLost == "pending" && <p className='p-[5px] rounded-full bg-yellow-500'></p>}
+                          {match.winOrLost === "lost" && <p className='p-[5px] rounded-full bg-red-500'></p>}
                         </div>
                       </div>
                     </div>
@@ -158,17 +147,6 @@ const Home = ({baseUrl}) => {
                 </div>
               )
             }
-            {/* {allMatches.map(match => (
-              <div className="bg-gray-300 py-4 rounded my-2">
-                <p className='text-center mb-3'>{match.league}</p>
-                <div className='flex items-center gap-3 justify-center'>
-                  <p>{match.team1}</p>
-                  <span>VS</span>
-                  <p>{match.team2}</p>
-                </div>
-                <p className='text-center mt-3'>{match.time}</p>
-              </div>
-            ))} */}
             
           </div>
           <div className='my-5'>
@@ -177,31 +155,24 @@ const Home = ({baseUrl}) => {
                 <div>
                   {message && <p className='text-center'>{message}</p> }
                   {pendingGames && pendingGames.map(match => (
-                    <div className="bg-gray-300 py-4 rounded my-2">
-                      {/* <p className='text-center mb-3'>{match.league}</p> */}
+                    <div className="bg-gray-300 py-4 rounded my-2 text-sm">
                       <div className='flex items-center gap-3 justify-center'>
-                      <p>{match.teamsOfBet}</p>
-                        {/* <p>{match.team1}</p>
-                        <span>VS</span>
-                        <p>{match.team2}</p> */}
+                        <p>{match.teamsOfBet}</p>
                       </div>
-                      {/* <p className='text-center mt-3'>{match.time}</p> */}
+                      <div className='flex items-center justify-between px-7'>
+                        <div className='flex items-center gap-2 text-[#4F3D3D]'>
+                          <i class="fa-regular fa-clock"></i>
+                          <p className='text-center'>{match.time}</p>
+                        </div>
+                        <div className='flex items-center gap-1'>
+                          {match.winOrLost == "pending" && <p className='p-[5px] rounded-full bg-yellow-500'></p>}
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
               )
             }
-            {/* {allMatches.map(match => (
-              <div className="bg-gray-300 py-4 rounded my-2">
-                <p className='text-center mb-3'>{match.league}</p>
-                <div className='flex items-center gap-3 justify-center'>
-                  <p>{match.team1}</p>
-                  <span>VS</span>
-                  <p>{match.team2}</p>
-                </div>
-                <p className='text-center mt-3'>{match.time}</p>
-              </div>
-            ))} */}
             
           </div>
           <div className='my-5'>
@@ -209,21 +180,9 @@ const Home = ({baseUrl}) => {
               activeTab === "Completed" && (
                 <div>
                   <p>No completed games yet</p>
-                  {/* dey what? dey play :) */}
                 </div>
               )
             }
-            {/* {allMatches.map(match => (
-              <div className="bg-gray-300 py-4 rounded my-2">
-                <p className='text-center mb-3'>{match.league}</p>
-                <div className='flex items-center gap-3 justify-center'>
-                  <p>{match.team1}</p>
-                  <span>VS</span>
-                  <p>{match.team2}</p>
-                </div>
-                <p className='text-center mt-3'>{match.time}</p>
-              </div>
-            ))} */}
             
           </div>
           <div className="my-5">
