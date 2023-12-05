@@ -19,6 +19,7 @@ const Home = ({baseUrl}) => {
   const [message, setMessage] = useState("")
   const [gameTabHeading, setGameTabHeading] = useState("All Games")
   const [activeTab, setActiveTab] = useState(homeTabs[0])
+  const [pendingGames, setPendingGames] = useState()
 
   useEffect(() => {
     getAllAvailableMatches()
@@ -26,7 +27,7 @@ const Home = ({baseUrl}) => {
 
   async function getAllAvailableMatches(){
     setIsLoading(true)
-    const response = await fetch(`${baseUrl}/get/matches`,{
+    const response = await fetch(`${baseUrl}/user/dynamic-details`,{
       method:"GET",
       headers:{
         Authorization: `Bearer ${user.token}`
@@ -35,9 +36,10 @@ const Home = ({baseUrl}) => {
     const data = await response.json()
     if(response.ok){
       setIsLoading(false)
-      setAllMatches(data.message)
+      setAllMatches(data.message.userGamesDetails.allPlacedGames)
     }
     console.log(response, data)
+    console.log(data.message.userGamesDetails)
   }
   
   const handleTabClick = (tab) => {
@@ -49,7 +51,12 @@ const Home = ({baseUrl}) => {
     }
     if(tab === "Pending"){
       setGameTabHeading("Pending Games")
-      playedMatches()
+      const pendingGames = allMatches.message.userGamesDetails.allPlacedGames
+          .filter(obj => obj.winOrlost === 'pending')
+          .map(obj => obj.winOrlost);
+          console.log(pendingGames)
+      // setPendingGames()
+      // playedMatches()
     }
     if(tab === "Completed"){
       setGameTabHeading("Completed Games")
@@ -57,40 +64,40 @@ const Home = ({baseUrl}) => {
     }
   }
   
-  const playedMatches = async () => {
-    console.log("Played")
-    setAllMatches([])
-    setIsLoading(true)
-    const response = await fetch(`${baseUrl}/user/dynamic-details`, {
-      method:"GET",
-      headers:{
-        Authorization: `Bearer ${user.token}`
-      }
-    })
-    if(response) setIsLoading(false)
-    const data = await response.json()
-    if(response.ok){
-      setAllMatches(data.message.userGamesDetails.allPlacedGames)
-    }
-    if(data.message.userGamesDetails.allPlacedGames.length === 0){
-      setMessage("You currently do not have any pending games yet")
-    }
-    console.log(data)
-  }
+  // const playedMatches = async () => {
+  //   console.log("Played")
+  //   setAllMatches([])
+  //   setIsLoading(true)
+  //   const response = await fetch(`${baseUrl}/user/dynamic-details`, {
+  //     method:"GET",
+  //     headers:{
+  //       Authorization: `Bearer ${user.token}`
+  //     }
+  //   })
+  //   if(response) setIsLoading(false)
+  //   const data = await response.json()
+  //   if(response.ok){
+  //     setAllMatches(data.message.userGamesDetails.allPlacedGames)
+  //   }
+  //   if(data.message.userGamesDetails.allPlacedGames.length === 0){
+  //     setMessage("You currently do not have any pending games yet")
+  //   }
+  //   console.log(data)
+  // }
 
-  const unPlayedMatches = async () => {
-    console.log("Played")
-    setIsLoading(true)
-    const response = await fetch(`${baseUrl}/user/dynamic-details`, {
-      method:"GET",
-      headers:{
-        Authorization: `Bearer ${user.token}`
-      }
-    })
-    if(response) setIsLoading(false)
-    const data = await response.json()
-    console.log(data)
-  }
+  // const unPlayedMatches = async () => {
+  //   console.log("Played")
+  //   setIsLoading(true)
+  //   const response = await fetch(`${baseUrl}/user/dynamic-details`, {
+  //     method:"GET",
+  //     headers:{
+  //       Authorization: `Bearer ${user.token}`
+  //     }
+  //   })
+  //   if(response) setIsLoading(false)
+  //   const data = await response.json()
+  //   console.log(data)
+  // }
 
 
   return (
@@ -125,12 +132,15 @@ const Home = ({baseUrl}) => {
               activeTab === "All" && (
                 <div>
                   {allMatches && allMatches.map(match => (
+                    
                     <div className="bg-gray-200 text-sm py-3 rounded my-2">
+                      {console.log(match.winOrlost)}
                       {/* <p className='text-center mb-3'>{match.league}</p> */}
                       <div className='flex items-center gap-3 justify-center'>
-                        <p>{match.team1}</p>
+                      <p>{match.teamsOfBet}</p>
+                        {/* <p>{match.team1}</p>
                         <span>VS</span>
-                        <p>{match.team2}</p>
+                        <p>{match.team2}</p> */}
                       </div>
                       <div className='flex items-center justify-between px-7'>
                         <div className='flex items-center gap-2 text-[#4F3D3D]'>
@@ -138,9 +148,9 @@ const Home = ({baseUrl}) => {
                           <p className='text-center'>{match.time}</p>
                         </div>
                         <div className='flex items-center gap-1'>
-                          <p className='p-[5px] rounded-full bg-red-500'></p>
-                          <p className='p-[5px] rounded-full bg-yellow-500'></p>
-                          <p className='p-[5px] rounded-full bg-green-500'></p>
+                          {match.winOrlost === "won" && <p className='p-[5px] rounded-full bg-green-500'></p>}
+                          {match.winOrlost == "pending" && <p className='p-[5px] rounded-full bg-yellow-500'></p>}
+                          {match.winOrlost === "lost" && <p className='p-[5px] rounded-full bg-red-500'></p>}
                         </div>
                       </div>
                     </div>

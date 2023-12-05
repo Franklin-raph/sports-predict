@@ -48,7 +48,7 @@ const SignUp = ({setShowSignUp, setShowSignIn, baseUrl}) => {
                 localStorage.setItem("username", JSON.stringify(data.message.userDetails.username))
             }
             if(!response.ok){
-                // setError(data.message)
+                setError(data.message)
             }
             
             // localStorage.setItem("user", JSON.stringify(email))
