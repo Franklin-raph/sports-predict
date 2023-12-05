@@ -77,7 +77,7 @@ const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
           {/* {user && <i class="ri-user-3-line text-lg cursor-pointer" onClick={() => toggleUserDropdown()}></i>} */}
 
           {userDropDown && 
-            <ul className='absolute bg-white shadow-2xl right-0 top-[45px] text-[14px] p-2 w-[50%]' style={{ border:"1px solid #D1D5DB" }}>
+            <ul className='absolute bg-white shadow-2xl right-0 top-[165px] text-[14px] p-2 w-[50%]' style={{ border:"1px solid #D1D5DB" }}>
               {location.pathname === "/" ? 
                 <li className='flex items-center justify-between bg-[#4F3D3D] text-white py-1 px-2 cursor-pointer' onClick={() => navigate("/")}>
                     <Link>Home</Link>

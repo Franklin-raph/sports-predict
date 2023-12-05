@@ -55,7 +55,7 @@ const Home = ({baseUrl}) => {
     }
     if(tab === "Completed"){
       setGameTabHeading("Completed Games")
-      unPlayedMatches()
+      // unPlayedMatches()
     }
   }
   
