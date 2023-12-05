@@ -51,11 +51,11 @@ const Home = ({baseUrl}) => {
     }
     if(tab === "Pending"){
       setGameTabHeading("Pending Games")
-      const pendingGames = allMatches.message.userGamesDetails.allPlacedGames
-          .filter(obj => obj.winOrlost === 'pending')
+      const pendingGames = allMatches
+          .filter(obj => obj.winOrlost === "pending")
           .map(obj => obj.winOrlost);
           console.log(pendingGames)
-      // setPendingGames()
+      setPendingGames(pendingGames)
       // playedMatches()
     }
     if(tab === "Completed"){
@@ -149,7 +149,7 @@ const Home = ({baseUrl}) => {
                         </div>
                         <div className='flex items-center gap-1'>
                           {match.winOrlost === "won" && <p className='p-[5px] rounded-full bg-green-500'></p>}
-                          {match.winOrlost == "pending" && <p className='p-[5px] rounded-full bg-yellow-500'></p>}
+                          {match.winOrlost == undefined && <p className='p-[5px] rounded-full bg-yellow-500'></p>}
                           {match.winOrlost === "lost" && <p className='p-[5px] rounded-full bg-red-500'></p>}
                         </div>
                       </div>
@@ -176,13 +176,14 @@ const Home = ({baseUrl}) => {
               activeTab === "Pending" && (
                 <div>
                   {message && <p className='text-center'>{message}</p> }
-                  {allMatches && allMatches.map(match => (
+                  {pendingGames && pendingGames.map(match => (
                     <div className="bg-gray-300 py-4 rounded my-2">
                       {/* <p className='text-center mb-3'>{match.league}</p> */}
                       <div className='flex items-center gap-3 justify-center'>
-                        <p>{match.team1}</p>
+                      <p>{match.teamsOfBet}</p>
+                        {/* <p>{match.team1}</p>
                         <span>VS</span>
-                        <p>{match.team2}</p>
+                        <p>{match.team2}</p> */}
                       </div>
                       {/* <p className='text-center mt-3'>{match.time}</p> */}
                     </div>

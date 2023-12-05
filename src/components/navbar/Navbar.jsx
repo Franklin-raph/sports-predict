@@ -41,7 +41,8 @@ const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
   }
 
   return (
-      <nav className='flex items-center justify-between w-full py-1 relative' style={{ borderBottom:"1px solid #4F3D3D" }}>
+      <nav className='flex items-center justify-between w-full pb-1 relative flex-col' style={{ borderBottom:"1px solid #4F3D3D" }}>
+        <img src="/public/logo png (1).png" alt="" width="30%" className='mb-2'/>
         {!user && 
           <div className='bg-[#4f3d3d] text-white w-full text-center rounded-[10px] mb-5 px-3'>
             <h4 className='mb-[1rem] mt-[3rem] font-bold text-xl text-[#847777]'>You do not have an account logged in</h4>
