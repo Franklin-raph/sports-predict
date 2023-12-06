@@ -45,17 +45,20 @@ const Home = ({baseUrl}) => {
   const handleTabClick = (tab) => {
     setActiveTab(tab)
     if(tab === "All"){
+      setMessage("")
       setGameTabHeading("All Games")
       setMessage("")
       getAllAvailableMatches()
     }
     if(tab === "Pending"){
+      setMessage("")
       setGameTabHeading("Pending Games")
       const pendingGames = allMatches.filter(obj => obj.winOrLost === "pending")
       setPendingGames(pendingGames)
       if(pendingGames.length === 0) setMessage("You have no pending games")
     }
-    if(tab === "Completed"){
+  if(tab === "Completed"){
+      setMessage("")
       setGameTabHeading("Completed Games")
       const completedGames = allMatches.filter(obj => obj.winOrLost === "completed")
       setCompletedGames(completedGames)
