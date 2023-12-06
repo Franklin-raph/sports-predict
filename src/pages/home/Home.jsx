@@ -123,15 +123,15 @@ const Home = ({baseUrl}) => {
                   {allMatches && allMatches.map(match => (
                     
                     <div className="bg-gray-200 text-sm my-2 relative h-[50px]">
-                    {match.winOrLost === "lost" && <div className='fixed h-[50px] w-[10px] bg-red-400'></div> }
-                    {match.winOrLost === "pending" && <div className='fixed h-[50px] w-[10px] bg-yellow-500'></div> }
-                    {match.winOrLost === "won" && <div className='fixed h-[50px] w-[10px] bg-green-300'></div> }
+                    {match.winOrLost === "lost" && <div className='absolute h-[50px] w-[10px] bg-red-400'></div> }
+                    {match.winOrLost === "pending" && <div className='absolute h-[50px] w-[10px] bg-yellow-500'></div> }
+                    {match.winOrLost === "won" && <div className='absolute h-[50px] w-[10px] bg-green-300'></div> }
                       <div className='flex items-center gap-3 justify-center pt-3'>
                         <p>{match.teamsOfBet}</p>
                       </div>
                       <div className='flex items-center justify-between px-7'>
                         <div className='flex items-center gap-2 text-[#4F3D3D]'>
-                          <i class="fa-regular fa-clock"></i>
+                          {/* <i class="fa-regular fa-clock"></i> */}
                           <p className='text-center'>{match.time}</p>
                         </div>
                         <div className='flex items-center gap-1'>
