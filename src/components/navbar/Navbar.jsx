@@ -67,7 +67,7 @@ const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
               {loading ? 
               <i class="fa-solid fa-spinner fa-spin"></i>
               :
-              <p>${userBalance && userBalance.message}</p>
+              <p>${userBalance && userBalance}</p>
               }
             </div>
           </div>
