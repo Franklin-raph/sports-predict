@@ -133,11 +133,11 @@ const Home = ({baseUrl}) => {
                 <div>
                   {message && <p className='text-center'>{message}</p>}
                   {allMatches && allMatches.map(match => (
-                    <div className="bg-gray-200 text-sm my-2 relative h-[50px] pr-3">
-                    {match.winOrLost === "lost" && <div className='absolute h-[50px] w-[10px] bg-red-400'></div> }
-                    {match.winOrLost === "pending" && <div className='absolute h-[50px] w-[10px] bg-yellow-500'></div> }
-                    {match.winOrLost === "won" && <div className='absolute h-[50px] w-[10px] bg-green-300'></div> }
-                      <div className='flex items-center gap-3 justify-between pt-[0.85rem]'>
+                    <div className="bg-gray-200 text-sm my-2 relative h-[30px] pr-3">
+                    {match.winOrLost === "lost" && <div className='absolute h-[30px] w-[10px] bg-red-400'></div> }
+                    {match.winOrLost === "pending" && <div className='absolute h-[30px] w-[10px] bg-yellow-500'></div> }
+                    {match.winOrLost === "won" && <div className='absolute h-[30px] w-[10px] bg-green-300'></div> }
+                      <div className='flex items-center gap-3 justify-between pt-[0.27rem]'>
                         <p></p>
                         <p className='font-bold pl-3'>{match.teamsOfBet}</p>
                         <p className='font-bold text-gray-500'>0.45</p>

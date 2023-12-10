@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Logo from "../../assets/logo png (1).png"
+import { jwtDecode } from "jwt-decode";
 
 const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
 
@@ -27,6 +28,24 @@ const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
     // }
   },[])
 
+  useEffect(() => {
+    if(!user) return
+    let decodedToken = jwtDecode(user.token);
+    console.log("Decoded Token", decodedToken);
+    let currentDate = new Date();
+
+    // JWT exp is in seconds
+    if (decodedToken.exp * 1000 < currentDate.getTime()) {
+      localStorage.clear()
+      // window.location.reload()
+      // window.location.href = "/"
+      navigate("/")
+    } else {
+      console.log("Valid token");   
+      // return true;
+    }
+},[])
+
   async function getUserBalance(){
     setLoading(true)
     const response = await fetch(`${baseUrl}/user/check-balance`,{
@@ -40,12 +59,12 @@ const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
     setUserBalance(data.message)
     console.log(response, data)
   }
-
+// "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRGF0YSI6eyJfaWQiOiJzYmMtMDMtN2NjM2UzIiwiYWN0aXZlIjp0cnVlLCJzdGF0dXMiOiJhY3RpdmF0ZWQifSwiaWF0IjoxNzAxNzIzNDQ4LCJleHAiOjE3MDE5ODI2NDh9.CdjrrtWZVoi5jLJNOlrKSQ8qePs1XlOenRO2a0--QNc"
   return (
       <nav className='flex items-center justify-between w-full pb-1 relative flex-col' style={{ borderBottom:"1px solid #4F3D3D" }}>
         <img src={Logo} alt="" width="30%" className='mb-2'/>
         {!user && 
-          <div className='bg-[#4f3d3d] text-white w-full text-center rounded-[10px] mb-5 px-3'>
+          <div className='bg-[#4f3d3d] text-white w-full text-center rounded-[10px] mb-5 px-3 h-[196px]'>
             <h4 className='mb-[1rem] mt-[3rem] font-bold text-xl text-[#847777]'>You do not have an account logged in</h4>
             <div className='mt-[1rem] mb-[3rem] flex items-center justify-center gap-[20px]'>
               <button className='bg-[#d9d9d9]' style={{ padding:"10px 20px", color:"#874444" }} onClick={() => setShowSignUp(true)}>Sign Up</button>
@@ -54,7 +73,7 @@ const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
           </div>
         }
         {user && 
-          <div className='bg-[#4f3d3d] text-white w-full text-center rounded-[10px] mb-5 p-4'>
+          <div className='bg-[#4f3d3d] text-white w-full text-center rounded-[10px] mb-5 p-4 h-[196px] flex flex-col justify-between'>
             <div className='flex items-center justify-between'>
               <div className='flex items-center gap-2 font-bold'>
                 <i class="ri-user-3-line text-lg cursor-pointer" onClick={() => toggleUserDropdown()}></i>
@@ -63,7 +82,7 @@ const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
               </div>
               <i class="ri-menu-line text-lg cursor-pointer" onClick={() => toggleUserDropdown()}></i>
             </div>
-            <div className='mt-[3rem] flex items-end justify-end gap-[20px]'>
+            <div className='mt-[3rem] flex items-end justify-end gap-[20px] relative bottom-0'>
               {loading ? 
               <i class="fa-solid fa-spinner fa-spin"></i>
               :
