@@ -52,7 +52,7 @@ const PlaceBet = ({baseUrl, setShowPlaceBet}) => {
     ]
 
   function playSelectedGame(team1, team2){
-    setSelectedGame(`${team1} vs ${team2}`)
+    setSelectedGame(`${team1} - ${team2}`)
     setShowGames(!showGames)
   }
 
@@ -69,6 +69,7 @@ const hanleFileInput = (e) => {
 
   async function placeBet(e){
     e.preventDefault()
+    console.log(selectedGame)
     console.log(JSON.stringify({teamsOfBet:selectedGame, typeOfMarket:selectedOutcome, odd, amountToPlay, bookmaker}))
     if(!selectedGame || !selectedOutcome || !odd || !amountToPlay || !bookmaker || selectedGame === "Select game to predict on" || selectedOutcome === "Predict game outcome" || !image){
       setError("Please make sure to fill in all fields")

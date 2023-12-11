@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Logo from "../../assets/logo png (1).png"
 import { jwtDecode } from "jwt-decode";
+import { NAV_LINKS } from '../../constants/Navlinks';
 
 const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
 
@@ -92,58 +93,24 @@ const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
           </div>
         }
         
-          {/* <h3 onClick={() => navigate("/")}>Logo</h3>
-          {!user && <button className='bg-[#4F3D3D]' onClick={() => setShowSignIn(true)}>Login</button>} */}
-          {/* {user && <i class="ri-user-3-line text-lg cursor-pointer" onClick={() => toggleUserDropdown()}></i>} */}
-
           {userDropDown && 
-            <ul className='absolute bg-white shadow-2xl right-0 top-[165px] text-[14px] p-2 w-[50%]' style={{ border:"1px solid #D1D5DB" }}>
-              {location.pathname === "/" ? 
-                <li className='flex items-center justify-between bg-[#4F3D3D] text-white py-1 px-2 cursor-pointer' onClick={() => navigate("/")}>
-                    <Link>Home</Link>
-                    <i class="ri-home-5-line"></i>
+            <ul className='absolute bg-white shadow-2xl right-0 top-[145px] text-[14px] p-2 w-[50%]' style={{ border:"1px solid #D1D5DB" }}>
+              {NAV_LINKS.map((link) => (
+                <>
+                  {location.pathname === link.navigate
+                  ?
+                  <li className={`flex items-center bg-[#4F3D3D] text-white justify-between py-1 px-2 cursor-pointer`} onClick={() => navigate(link.navigate)}>
+                    <Link>{link.label}</Link>
+                    <i class={link.icon}></i>
                   </li>
-                  :
-                  <li className='flex items-center justify-between py-1 cursor-pointer' onClick={() => navigate("/")}>
-                    <Link>Home</Link>
-                    <i class="ri-home-5-line"></i>
-                </li>
-              }
-              {location.pathname === "/settings" ? 
-              <li className='flex items-center justify-between bg-[#4F3D3D] text-white py-1 px-2 cursor-pointer' onClick={() => navigate("/settings")}>
-                <Link>Settings</Link>
-                <i class="ri-settings-3-line"></i>
-              </li>
-              :
-              <li className='flex items-center justify-between cursor-pointer' onClick={() => navigate("/settings")}>
-                <Link>Settings</Link>
-                <i class="ri-settings-3-line"></i>
-              </li>
-              }
-
-              {location.pathname === "/rankings" ? 
-              <li className='flex items-center justify-between bg-[#4F3D3D] text-white py-1 px-2 cursor-pointer' onClick={() => navigate("/rankings")}>
-                <Link>Rankings</Link>
-                <i class="ri-line-chart-line"></i>
-              </li>
-              :
-              <li className='flex items-center justify-between cursor-pointer' onClick={() => navigate("/rankings")}>
-                <Link>Rankings</Link>
-                <i class="ri-line-chart-line"></i>
-              </li>
-              }
-
-              {location.pathname === "/contact-us" ? 
-              <li className='flex items-center justify-between bg-[#4F3D3D] text-white py-1 px-2 cursor-pointer' onClick={() => navigate("/contact-us")}>
-                <Link>Contact Us</Link>
-                <i class="ri-phone-line"></i>
-              </li>
-              :
-              <li className='flex items-center justify-between cursor-pointer' onClick={() => navigate("/contact-us")}>
-                <Link>Contact Us</Link>
-                <i class="ri-phone-line"></i>
-              </li>
-              }
+                :
+                  <li className={`flex items-center justify-between py-1 px-2 cursor-pointer`} onClick={() => navigate(link.navigate)}>
+                    <Link>{link.label}</Link>
+                    <i class={link.icon}></i>
+                  </li>
+                  }
+                </>
+              ))}
               <li onClick={logoutUser} className='flex items-center justify-between mt-3 pt-2 cursor-pointer' style={{ borderTop:"1px solid gray" }}>
                 <p>Logout</p>
                 <i class="ri-logout-circle-r-line"></i>

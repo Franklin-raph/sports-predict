@@ -1,0 +1,22 @@
+export const NAV_LINKS = [
+    {
+        "label":"Home",
+        "navigate":"/",
+        "icon":"ri-home-5-line"
+    },
+    {
+        "label":"Settings",
+        "navigate":"/settings",
+        "icon":"ri-settings-3-line"
+    },
+    {
+        "label":"Rankings",
+        "navigate":"/rankings",
+        "icon":"ri-line-chart-line"
+    },
+    {
+        "label":"Contacts",
+        "navigate":"/contact-us",
+        "icon":"ri-phone-line"
+    },
+]
