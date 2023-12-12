@@ -1,6 +1,7 @@
 import {useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import ErrorAlert from '../alert/error-alert/ErrorAlert'
+import SignInVerification from '../signin-verification/SignInVerification'
 
 const SignIn = ({setShowSignIn, setShowSignUp, baseUrl}) => {
     
@@ -8,6 +9,8 @@ const SignIn = ({setShowSignIn, setShowSignUp, baseUrl}) => {
     const [password, setPassword] = useState("")
     const [error, setError] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const [showVerifyBtn, setShowVerifyBtn] = useState(false)
+    const [showVerifyModal, setShowVerifyModal] = useState(false)
     const navigate = useNavigate()
 
     async function handleUserSignIn(e){
@@ -30,6 +33,11 @@ const SignIn = ({setShowSignIn, setShowSignUp, baseUrl}) => {
             if(response.ok){
                 localStorage.setItem("user", JSON.stringify(data))
                 setShowSignIn(false)
+            }
+            if(response.status === 401){
+                setShowVerifyModal(true)
+                setShowVerifyBtn(true)
+                console.log("first")
             }
             if(!response.ok){
                 setError(data.message)
@@ -71,7 +79,9 @@ const SignIn = ({setShowSignIn, setShowSignUp, baseUrl}) => {
             }
             <p>Don't have an account? <span onClick={() => openSignUp()} className="underline cursor-pointer">sign up</span> </p>
         </form>
-        {error && <ErrorAlert error={error} setError={setError}/> }
+        {showVerifyModal && <SignInVerification setShowVerifyModal={setShowVerifyModal} username={username} baseUrl={baseUrl}/> }
+        
+        {error && <ErrorAlert error={error} setError={setError} showVerifyBtn={showVerifyBtn} setShowSignIn={setShowSignIn} showVerifyModal={showVerifyModal} setShowVerifyModal={setShowVerifyModal}/> }
     </div>
   )
 }

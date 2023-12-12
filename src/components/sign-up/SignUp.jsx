@@ -23,7 +23,7 @@ const SignUp = ({setShowSignUp, setShowSignIn, baseUrl}) => {
         setShowSignUp(false)
         setShowSignIn(true)
     }
-
+    // frank123456789
     async function handleUserSignUp(e){
         e.preventDefault()
         if(!email || !password || !phone || !name || !confirmPassword){
@@ -56,11 +56,6 @@ const SignUp = ({setShowSignUp, setShowSignIn, baseUrl}) => {
     }
 
     async function verifyAccount(){
-        if(!verificationCode) setError("Please ")
-        setIsVerifyLoading(true)
-    }
-
-    async function verifyAccount(){
         console.log(JSON.stringify({username:JSON.parse(localStorage.getItem("username")), code:verificationCode}))
         console.log(verificationCode)
         if(verificationCode === ""){
@@ -90,8 +85,8 @@ const SignUp = ({setShowSignUp, setShowSignIn, baseUrl}) => {
             <i className="ri-close-fill absolute right-2 top-2 text-2xl text-[#4F3D3D] hover:text-gray-500 cursor-pointer" onClick={() => closeSigUp()}></i>
             <h2 className="font-bold text-lg mb-6">Personal Information</h2>
             <div>
-                <label>Name</label>
-                <input type="text" placeholder='name' onChange={e => setName(e.target.value)} value={name}/>
+                <label>Username</label>
+                <input type="text" placeholder='username' onChange={e => setName(e.target.value)} value={name}/>
             </div>
             <div>
                 <label>Email</label>
@@ -122,7 +117,7 @@ const SignUp = ({setShowSignUp, setShowSignIn, baseUrl}) => {
             }
             <p>Already have an account? <span onClick={() => openSignIn()} className="underline cursor-pointer">sign in</span> </p>
         </form>
-        {error && <ErrorAlert error={error} setError={setError}/>}
+        {error && <ErrorAlert error={error} setError={setError} setVerifyModal={setVerifyModal}/>}
 
         {verifyModal && 
             <div className='verify-account-bg'>
@@ -133,7 +128,7 @@ const SignUp = ({setShowSignUp, setShowSignIn, baseUrl}) => {
                     <ul className='text-left mt-5 flex flex-col gap-2'>
                         <li className='flex items-center gap-2'>
                             <span className='p-2 bg-gray-400 rounded-full'></span>
-                            <p className='text-sm'>Tap <span className='underline'>here</span> to start telegram authentication </p>
+                            <p className='text-sm'>Tap <a href='https://t.me/thesbc_bot' target='_blank' className='underline'>here</a> to start telegram authentication </p>
                         </li>
                         <li className='flex items-center gap-2'>
                             <span className='p-2 bg-gray-400 rounded-full'></span>

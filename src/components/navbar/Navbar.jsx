@@ -42,7 +42,7 @@ const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
       // window.location.href = "/"
       navigate("/")
     } else {
-      console.log("Valid token");   
+      console.log("Valid token");
       // return true;
     }
 },[])

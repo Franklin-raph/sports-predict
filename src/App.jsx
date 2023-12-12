@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { HashRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 import Home from './pages/home/Home'
 import Settings from './pages/settings/Settings'
@@ -19,7 +19,7 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       {/* <Navbar /> */}
       <Routes>
         <Route path='/' element={<Home baseUrl={baseUrl}/>}/>
@@ -28,7 +28,7 @@ function App() {
         <Route path='/contact-us' element={<ContactUs baseUrl={baseUrl}/>}/>
       </Routes>
       <button className='fixed bottom-5 right-5 bg-[#4F3D3D] px-2 py-1 text-xl text-white rounded-md' onClick={() => scrollToTop()}><i class="ri-arrow-up-double-fill"></i></button>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 
