@@ -8,7 +8,8 @@ import ContactUs from './pages/contact-us/ContactUs'
 
 function App() {
 
-  const baseUrl = "https://sbc-tu3x.onrender.com/api/sbc"
+  const baseUrl = "https://forecastersroyale.com/api/sbc"
+  // const baseUrl = "https://sbc-tu3x.onrender.com/api/sbc"
 
   function scrollToTop(){
     window.scrollTo(0, 0)
