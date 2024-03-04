@@ -31,6 +31,7 @@ const SignUp = ({setShowSignUp, setShowSignIn, baseUrl}) => {
         }else if(password !== confirmPassword){
             setError("Please both password fields must match")
         }else{
+            localStorage.setItem("username", JSON.stringify(name))
             console.log(JSON.stringify({email, password, phone, username:name}))
             setIsLoading(true)
             const response = await fetch(`${baseUrl}/user/create-account`,{
@@ -45,7 +46,6 @@ const SignUp = ({setShowSignUp, setShowSignIn, baseUrl}) => {
             if(response) setIsLoading(false)
             if(response.ok){
                 setVerifyModal(true)
-                localStorage.setItem("username", JSON.stringify(data.message.userDetails.username))
             }
             if(!response.ok){
                 setError(data.message)
