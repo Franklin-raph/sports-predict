@@ -87,7 +87,10 @@ const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
               {loading ? 
               <i class="fa-solid fa-spinner fa-spin"></i>
               :
-              <p>${userBalance && userBalance}</p>
+              <p>{userBalance && new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+            }).format(userBalance) }</p>
               }
             </div>
           </div>

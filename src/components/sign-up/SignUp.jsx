@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import ErrorAlert from '../alert/error-alert/ErrorAlert'
+import SuccessAlert from '../alert/success-alert/SuccessAlert'
 
 const SignUp = ({setShowSignUp, setShowSignIn, baseUrl}) => {
 
@@ -9,6 +10,7 @@ const SignUp = ({setShowSignUp, setShowSignIn, baseUrl}) => {
     const [confirmPassword, setConfirmPassword] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState(false)
+    const [success, setSuccess] = useState(false)
     const [verifyModal, setVerifyModal] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [isVerifyLoading, setIsVerifyLoading] = useState(false)
@@ -46,6 +48,7 @@ const SignUp = ({setShowSignUp, setShowSignIn, baseUrl}) => {
             if(response) setIsLoading(false)
             if(response.ok){
                 setVerifyModal(true)
+                localStorage.setItem('user', JSON.stringify(data.data))
             }
             if(!response.ok){
                 setError(data.message)
@@ -71,9 +74,15 @@ const SignUp = ({setShowSignUp, setShowSignIn, baseUrl}) => {
                 body: JSON.stringify({username:JSON.parse(localStorage.getItem("username")), code:verificationCode})
             })
             const data = await response.json()
+            console.log(data);
             if(response) setIsVerifyLoading(false)
             if(!response.ok){
                 setError(data.message)
+            }
+            if(response.ok){
+                // setVerifyModal(false)
+                // setShowSignUp(false)
+                setSuccess(data.message)
             }
             console.log(response, data)
         }
@@ -118,13 +127,27 @@ const SignUp = ({setShowSignUp, setShowSignIn, baseUrl}) => {
             <p>Already have an account? <span onClick={() => openSignIn()} className="underline cursor-pointer">sign in</span> </p>
         </form>
         {error && <ErrorAlert error={error} setError={setError} setVerifyModal={setVerifyModal}/>}
+        {success && 
+            <div className='modal-bg'>
+                <div className="error-modal bg-[#fff] w-[25%] h-[30%] text-center flex items-center justify-center flex-col relative">
+                {/* <i className="ri-close-fill absolute right-2 top-2 text-2xl text-[#4F3D3D] hover:text-gray-500 cursor-pointer" onClick={() => setSuccess(false)}></i> */}
+                <i class="ri-check-fill text-4xl mb-4 text-green-500"></i>
+                <p>{success}</p>
+                <button className='bg-[#4F3D3D] mt-3 text-white mb-2 py-2 px-4 rounded-md' onClick={() => {
+                    setShowSignIn(true)
+                    setShowSignUp(false)
+                    setVerifyModal(false)
+                }}>Continue to login</button>
+            </div>
+          </div>
+        }
 
         {verifyModal && 
             <div className='verify-account-bg'>
                 <div className='verify-account sign-up-form relative'>
                 <i className="ri-close-fill absolute right-2 top-2 text-2xl text-[#4F3D3D] hover:text-gray-500 cursor-pointer" onClick={() => setVerifyModal(false)}></i>
                     <h1 className='font-bold text-lg'>Verifying your account</h1>
-                    <input type="email" placeholder='1234' className='py-1 px-2 mt-6' onChange={e => setVerificationCode(e.target.value)}/>
+                    <input type="text" placeholder='1234' className='py-1 px-2 mt-6' onChange={e => setVerificationCode(e.target.value)}/>
                     <ul className='text-left mt-5 flex flex-col gap-2'>
                         <li className='flex items-center gap-2'>
                             <span className='p-2 bg-gray-400 rounded-full'></span>

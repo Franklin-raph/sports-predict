@@ -38,7 +38,7 @@ const SignInVerification = ({setShowVerifyModal, username, baseUrl}) => {
             <div className='verify-account sign-up-form relative'>
             <i className="ri-close-fill absolute right-2 top-2 text-2xl text-[#4F3D3D] hover:text-gray-500 cursor-pointer" onClick={() => setShowVerifyModal(false)}></i>
                 <h1 className='font-bold text-lg'>Verifying your account</h1>
-                <input type="email" placeholder='1234' className='py-1 px-2 mt-6' onChange={e => setVerificationCode(e.target.value)}/>
+                <input type="text" placeholder='1234' className='py-1 px-2 mt-6' onChange={e => setVerificationCode(e.target.value)}/>
                 <ul className='text-left mt-5 flex flex-col gap-2'>
                     <li className='flex items-center gap-2'>
                         <span className='p-2 bg-gray-400 rounded-full'></span>

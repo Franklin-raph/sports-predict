@@ -80,7 +80,7 @@ const Settings = ({baseUrl}) => {
         }else if(newPassword !== confirmPassword){
             setError("New password and confirm password field must match")
         }else{
-            console.log(JSON.stringify({oldpassword:oldPassword, newpassword:newPassword}))
+            console.log(JSON.stringify({oldPassword:oldPassword, newpassword:newPassword}))
             setIsLoading(true)
             const response = await fetch(`${baseUrl}/user/update-details/security`,{
                 method:"POST",
@@ -88,7 +88,7 @@ const Settings = ({baseUrl}) => {
                     "Content-Type":"application/json",
                     Authorization:`Bearer ${user.token}`
                 },
-                body: JSON.stringify({oldpassword:oldPassword, newpassword:newPassword})
+                body: JSON.stringify({oldPassword:oldPassword, newpassword:newPassword})
             })
             if(response) setIsLoading(false)
             const data = await response.json()
@@ -151,7 +151,7 @@ const Settings = ({baseUrl}) => {
                     <div>
                         <div className='mt-4'>
                             <label>Email</label>
-                            <input type="email" value={email} onChange={e => setEmail(e.target.value)} className='w-full' style={{ outline:"none", border:"1px solid balck" }}/>
+                            <input type="email" value={email} className='w-full' style={{ outline:"none", border:"1px solid balck" }}/>
                         </div>
                         <div className='mt-4'>
                             <label>Phone Number</label>

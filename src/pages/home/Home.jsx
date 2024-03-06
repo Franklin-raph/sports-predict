@@ -11,7 +11,7 @@ const Home = ({baseUrl}) => {
   const [showSignIn, setShowSignIn] = useState(false)
   const [showSignUp, setShowSignUp] = useState(false)
   const [showPlaceBet, setShowPlaceBet] = useState(false)
-  const [allMatches, setAllMatches] = useState()
+  const [allMatches, setAllMatches] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const homeTabs =  ["All", "Pending", "Completed"]
   const [message, setMessage] = useState("")
@@ -33,10 +33,11 @@ const Home = ({baseUrl}) => {
       }
     })
     const data = await response.json()
+    console.log(data.message.userGamesDetails.allPlacedGames);
     if(response.ok){
       setIsLoading(false)
       setAllMatches(data.message.userGamesDetails.allPlacedGames)
-
+      if(data.message.userGamesDetails.allPlacedGames === 0) setMessage("You have no placed games yet")
       if(data.message.userGamesDetails.allPlacedGames.length === 0) setMessage("You have no active games")
     }
     console.log(data.message.userGamesDetails.allPlacedGames)
@@ -133,14 +134,14 @@ const Home = ({baseUrl}) => {
                 <div>
                   {message && <p className='text-center'>{message}</p>}
                   {allMatches && allMatches.map(match => (
-                    <div className="bg-gray-200 text-sm my-2 relative h-[30px] pr-3">
-                    {match.winOrLost === "lost" && <div className='absolute h-[30px] w-[10px] bg-red-400'></div> }
-                    {match.winOrLost === "pending" && <div className='absolute h-[30px] w-[10px] bg-yellow-500'></div> }
-                    {match.winOrLost === "won" && <div className='absolute h-[30px] w-[10px] bg-green-300'></div> }
-                      <div className='flex items-center gap-3 justify-between pt-[0.27rem]'>
+                    <div className="bg-gray-200 text-sm my-2 relative h-[50px] pr-3">
+                    {match.winOrLost === "lost" && <div className='absolute h-[50px] w-[10px] bg-red-400'></div> }
+                    {match.winOrLost === "pending" && <div className='absolute h-[50px] w-[10px] bg-yellow-500'></div> }
+                    {match.winOrLost === "won" && <div className='absolute h-[50px] w-[10px] bg-green-300'></div> }
+                      <div className='flex items-center gap-3 justify-between pt-[1rem]'>
                         <p></p>
                         <p className='font-bold pl-3'>{match.teamsOfBet}</p>
-                        <p className='font-bold text-gray-500'>0.45</p>
+                        <p className='font-bold text-gray-500'>{match.odd}</p>
                       </div>
                     </div>
                   ))}
@@ -160,10 +161,10 @@ const Home = ({baseUrl}) => {
                       {match.winOrLost === "lost" && <div className='absolute h-[50px] w-[10px] bg-red-400'></div> }
                       {match.winOrLost === "pending" && <div className='absolute h-[50px] w-[10px] bg-yellow-500'></div> }
                       {match.winOrLost === "won" && <div className='absolute h-[50px] w-[10px] bg-green-300'></div> }
-                      <div className='flex items-center gap-3 justify-between pt-[0.85rem]'>
+                      <div className='flex items-center gap-3 justify-between pt-[1rem]'>
                         <p></p>
                         <p className='font-bold pl-3'>{match.teamsOfBet}</p>
-                        <p className='font-bold text-gray-500'>0.45</p>
+                        <p className='font-bold text-gray-500'>{match.odd}</p>
                       </div>
                     </div>
                   ))}
@@ -182,10 +183,10 @@ const Home = ({baseUrl}) => {
                       {match.winOrLost === "lost" && <div className='absolute h-[50px] w-[10px] bg-red-400'></div> }
                       {match.winOrLost === "pending" && <div className='absolute h-[50px] w-[10px] bg-yellow-500'></div> }
                       {match.winOrLost === "won" && <div className='absolute h-[50px] w-[10px] bg-green-300'></div> }
-                      <div className='flex items-center gap-3 justify-between pt-[0.85rem]'>
+                      <div className='flex items-center gap-3 justify-between pt-[1rem]'>
                         <p></p>
                         <p className='font-bold pl-3'>{match.teamsOfBet}</p>
-                        <p className='font-bold text-gray-500'>0.45</p>
+                        <p className='font-bold text-gray-500'>{match.odd}</p>
                       </div>
                     </div>
                   ))}

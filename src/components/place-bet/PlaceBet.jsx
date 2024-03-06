@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react'
 import ErrorAlert from '../alert/error-alert/ErrorAlert'
+import SuccessAlert from '../alert/success-alert/SuccessAlert'
 
 const PlaceBet = ({baseUrl, setShowPlaceBet}) => {
 
@@ -20,6 +21,7 @@ const PlaceBet = ({baseUrl, setShowPlaceBet}) => {
   const [odd, setOdd] = useState("")
   const [bookmaker, setBookmaker] = useState("")
   const [error, setError] = useState(false)
+  const [success, setSuccess] = useState(false)
 
   async function getAllAvailableGames(){
     // setIsLoading(true)
@@ -69,8 +71,8 @@ const hanleFileInput = (e) => {
 
   async function placeBet(e){
     e.preventDefault()
-    console.log(selectedGame)
-    console.log(JSON.stringify({teamsOfBet:selectedGame, typeOfMarket:selectedOutcome, odd, amountToPlay, bookmaker}))
+    // console.log(selectedGame)
+    // console.log(JSON.stringify({teamsOfBet:selectedGame, typeOfMarket:selectedOutcome, odd, amountToPlay, bookmaker}))
     if(!selectedGame || !selectedOutcome || !odd || !amountToPlay || !bookmaker || selectedGame === "Select game to predict on" || selectedOutcome === "Predict game outcome" || !image){
       setError("Please make sure to fill in all fields")
     }else{
@@ -81,7 +83,13 @@ const hanleFileInput = (e) => {
       formData.append("odd", odd)
       formData.append("amountToPlay", amountToPlay)
       formData.append("bookmaker", bookmaker)
-      console.log(formData)
+      formData.keys().forEach(data => {
+        console.log(data);
+      })
+      formData.values().forEach(data => {
+        console.log(data);
+      })
+      // console.log(formData.values())
       setIsLoading(true)
       const response = await fetch(`${baseUrl}/user/place-bet`,{
         method:"POST",
@@ -100,6 +108,10 @@ const hanleFileInput = (e) => {
       if(response.status === 403) {
         setError(data.message)
         setTimeout(() => setError(""), 9000)
+      }
+      if(response.status === 200){
+        // setShowPlaceBet(false)
+        setSuccess(data.message)
       }
     }
   }
@@ -144,10 +156,7 @@ const hanleFileInput = (e) => {
                 <div className='h-[30vh] shadow-2xl overflow-x-hidden p-3'>
                     {/* <input type="text" placeholder='Search' onChange={e => setSearchTerm(e.target.value)}/> */}
                     <div>
-                      {gameOutcomes && gameOutcomes.filter((outcome) => {
-                      if(searchTerm === "") return outcome
-                      else if (outcome.toLowerCase().includes(searchTerm.toLowerCase()) || outcome.toLowerCase().includes(searchTerm.toLowerCase())) return outcome
-                      }).map(outcome => (
+                      {gameOutcomes && gameOutcomes.map(outcome => (
                             <div className='flex items-center gap-3 justify-center py-1 text-[14px] pb-2' onClick={() => playSelectedOutcome(outcome)} style={{ borderBottom:"1px solid #ccc" }}>
                                 <p className='cursor-pointer'>{outcome}</p>
                             </div>
@@ -188,6 +197,7 @@ const hanleFileInput = (e) => {
             <p className='text-[13px]'>For frequently asked question, <span className='underline cursor-pointer'>Tap here</span> </p>
         </form>
         {error && <ErrorAlert error={error} setError={setError}/> }
+        {success && <SuccessAlert success={success} setSuccess={setSuccess} setShowPlaceBet={setShowPlaceBet}/> }
     </div>
   )
 }
