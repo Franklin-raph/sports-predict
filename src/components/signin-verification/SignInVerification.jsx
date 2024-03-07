@@ -16,7 +16,7 @@ const SignInVerification = ({setShowSignInVerificationModal, baseUrl}) => {
         console.log(JSON.stringify({username, code:verificationCode}))
         // console.log(verificationCode)
         if(verificationCode === "" || username === ""){
-            setError("Please fill in the verification code")
+            setError("Please fill in the fields")
             return
         }else{
             setIsVerifyLoading(true)
