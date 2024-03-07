@@ -15,7 +15,7 @@ const SignInVerification = ({setShowSignInVerificationModal, baseUrl}) => {
     async function verifyAccount(){
         console.log(JSON.stringify({username, code:verificationCode}))
         // console.log(verificationCode)
-        if(verificationCode === ""){
+        if(verificationCode === "" || username === ""){
             setError("Please fill in the verification code")
             return
         }else{
