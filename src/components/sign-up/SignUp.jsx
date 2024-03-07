@@ -48,7 +48,7 @@ const SignUp = ({setShowSignUp, setShowSignIn, baseUrl}) => {
             if(response) setIsLoading(false)
             if(response.ok){
                 setVerifyModal(true)
-                localStorage.setItem('user', JSON.stringify(data.data))
+                // localStorage.setItem('user', JSON.stringify(data.data))
             }
             if(!response.ok){
                 setError(data.message)
@@ -130,7 +130,6 @@ const SignUp = ({setShowSignUp, setShowSignIn, baseUrl}) => {
         {success && 
             <div className='modal-bg'>
                 <div className="error-modal bg-[#fff] w-[25%] h-[30%] text-center flex items-center justify-center flex-col relative">
-                {/* <i className="ri-close-fill absolute right-2 top-2 text-2xl text-[#4F3D3D] hover:text-gray-500 cursor-pointer" onClick={() => setSuccess(false)}></i> */}
                 <i class="ri-check-fill text-4xl mb-4 text-green-500"></i>
                 <p>{success}</p>
                 <button className='bg-[#4F3D3D] mt-3 text-white mb-2 py-2 px-4 rounded-md' onClick={() => {

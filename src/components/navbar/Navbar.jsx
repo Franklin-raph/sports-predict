@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Logo from "../../assets/logo png (1).png"
 import { jwtDecode } from "jwt-decode";
 import { NAV_LINKS } from '../../constants/Navlinks';
+import SignInVerification from '../signin-verification/SignInVerification';
 
 const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
 
@@ -12,6 +13,7 @@ const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
   const [userDropDown, setUserDropDown] = useState(false)
   const [userBalance, setUserBalance] = useState()
   const [loading, setLoading] = useState(false)
+  const [showSignInVerificationModal, setShowSignInVerificationModal] = useState(false)
 
   function toggleUserDropdown(){
     setUserDropDown(!userDropDown)
@@ -65,12 +67,13 @@ const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
       <nav className='flex items-center justify-between w-full pb-1 relative flex-col' style={{ borderBottom:"1px solid #4F3D3D" }}>
         <img src={Logo} alt="" width="30%" className='mb-2'/>
         {!user && 
-          <div className='bg-[#4f3d3d] text-white w-full text-center rounded-[10px] mb-5 px-3 h-[196px]'>
-            <h4 className='mb-[1rem] mt-[3rem] font-bold text-xl text-[#847777]'>You do not have an account logged in</h4>
-            <div className='mt-[1rem] mb-[3rem] flex items-center justify-center gap-[20px]'>
-              <button className='bg-[#d9d9d9]' style={{ padding:"10px 20px", color:"#874444" }} onClick={() => setShowSignUp(true)}>Sign Up</button>
-              <button className='bg-[#847777]' style={{ padding:"10px 20px" }} onClick={() => setShowSignIn(true)}>Sign In</button>
+          <div className='bg-[#4f3d3d] text-white w-full text-center rounded-[10px] mb-5 p-[1rem]'>
+            <h4 className='mb-[1rem] mt-[1rem] font-bold text-xl text-[#847777]'>You do not have an account logged in</h4>
+            <div className='mt-[1rem] mb-[0.5rem] flex items-center justify-center flex-col sm:flex-row gap-[20px]'>
+              <button className='bg-[#d9d9d9] w-full' style={{ padding:"10px 20px", color:"#874444" }} onClick={() => setShowSignUp(true)}>Sign Up</button>
+              <button className='bg-[#847777] w-full' style={{ padding:"10px 20px" }} onClick={() => setShowSignIn(true)}>Sign In</button>
             </div>
+            <p className='cursor-pointer mt-4' onClick={() => setShowSignInVerificationModal(true)}>Verify Account</p>
           </div>
         }
         {user && 
@@ -97,7 +100,7 @@ const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
         }
         
           {userDropDown && 
-            <ul className='absolute bg-white shadow-2xl right-0 top-[145px] text-[14px] p-2 w-[50%]' style={{ border:"1px solid #D1D5DB" }}>
+            <ul className='absolute bg-white shadow-2xl right-0 top-[168px] text-[14px] p-2 w-[50%]' style={{ border:"1px solid #D1D5DB" }}>
               {NAV_LINKS.map((link) => (
                 <>
                   {location.pathname === link.navigate
@@ -119,6 +122,9 @@ const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
                 <i class="ri-logout-circle-r-line"></i>
               </li>
             </ul>
+          }
+          {
+            showSignInVerificationModal && <SignInVerification baseUrl={baseUrl} setShowSignInVerificationModal={setShowSignInVerificationModal}/>
           }
         </nav>
   )
