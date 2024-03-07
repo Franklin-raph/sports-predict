@@ -46,6 +46,7 @@ const Settings = ({baseUrl}) => {
             setBank(data.message.userSbcDetails.bank)
             setAccountName(data.message.userSbcDetails.accountName)
             setAccountNumber(data.message.userSbcDetails.accountNumber)
+            setPhone(data.message.userSbcDetails.phoneNumber)
             console.log(data.message.userSbcDetails.bank)
         }
         console.log(data)
@@ -88,7 +89,7 @@ const Settings = ({baseUrl}) => {
                     "Content-Type":"application/json",
                     Authorization:`Bearer ${user.token}`
                 },
-                body: JSON.stringify({oldPassword:oldPassword, newpassword:newPassword})
+                body: JSON.stringify({oldPassword:oldPassword, newPassword:newPassword})
             })
             if(response) setIsLoading(false)
             const data = await response.json()
@@ -155,7 +156,7 @@ const Settings = ({baseUrl}) => {
                         </div>
                         <div className='mt-4'>
                             <label>Phone Number</label>
-                            <input type="number" onChange={e => setPhone(e.target.value)} className='w-full'/>
+                            <input type="number" value={phone} onChange={e => setPhone(e.target.value)} className='w-full'/>
                         </div>
                         {isLoading ?
                             <button className="bg-[#4F3D3D] mt-3 text-white mb-2 py-2 w-full rounded-md cursor-not-allowed">
