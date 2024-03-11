@@ -92,7 +92,7 @@ const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
               :
               <p>{userBalance && new Intl.NumberFormat('en-US', {
                 style: 'currency',
-                currency: 'USD',
+                currency: 'NGN',
             }).format(userBalance) }</p>
               }
             </div>

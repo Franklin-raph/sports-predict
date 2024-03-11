@@ -83,12 +83,12 @@ const hanleFileInput = (e) => {
       formData.append("odd", odd)
       formData.append("amountToPlay", amountToPlay)
       formData.append("bookmaker", bookmaker)
-      formData.keys().forEach(data => {
-        console.log(data);
-      })
-      formData.values().forEach(data => {
-        console.log(data);
-      })
+      // formData.keys().forEach(data => {
+      //   console.log(data);
+      // })
+      // formData.values().forEach(data => {
+      //   console.log(data);
+      // })
       // console.log(formData.values())
       setIsLoading(true)
       const response = await fetch(`${baseUrl}/user/place-bet`,{
@@ -111,6 +111,7 @@ const hanleFileInput = (e) => {
       }
       if(response.status === 200){
         // setShowPlaceBet(false)
+        location.href = '/'
         setSuccess(data.message)
       }
     }

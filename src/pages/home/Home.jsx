@@ -33,7 +33,6 @@ const Home = ({baseUrl}) => {
       }
     })
     const data = await response.json()
-    console.log(data.message.userGamesDetails.allPlacedGames);
     if(response.ok){
       setIsLoading(false)
       setAllMatches(data.message.userGamesDetails.allPlacedGames)
