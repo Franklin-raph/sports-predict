@@ -66,7 +66,8 @@ const Home = ({baseUrl}) => {
       if(completedGames.length === 0) setMessage("You have no completed games")
     }
   }
-  
+
+
   // const playedMatches = async () => {
   //   console.log("Played")
   //   setAllMatches([])
@@ -148,7 +149,6 @@ const Home = ({baseUrl}) => {
                 </div>
               )
             }
-            
           </div>
 
           <div className='my-5'>

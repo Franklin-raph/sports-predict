@@ -32,7 +32,8 @@ const SignIn = ({setShowSignIn, setShowSignUp, baseUrl}) => {
             if(response) setIsLoading(false)
             if(response.ok){
                 localStorage.setItem("user", JSON.stringify(data))
-                setShowSignIn(false)
+                location.href = '/'
+                // setShowSignIn(false)
             }
             if(response.status === 401){
                 setShowVerifyModal(true)
