@@ -53,14 +53,15 @@ const Home = ({baseUrl}) => {
     if(tab === "Pending"){
       setMessage("")
       setGameTabHeading("Pending Games")
-      const pendingGames = allMatches.filter(obj => obj.winOrLost === "pending")
+      const pendingGames = allMatches.filter(obj => obj.betOutcome !== "Settled")
       setPendingGames(pendingGames)
       if(pendingGames.length === 0) setMessage("You have no pending games")
     }
   if(tab === "Completed"){
+    console.log(allMatches);
       setMessage("")
       setGameTabHeading("Completed Games")
-      const completedGames = allMatches.filter(obj => obj.winOrLost === "completed")
+      const completedGames = allMatches.filter(obj => obj.betOutcome === "Settled")
       setCompletedGames(completedGames)
       if(completedGames.length === 0) setMessage("You have no completed games")
     }
