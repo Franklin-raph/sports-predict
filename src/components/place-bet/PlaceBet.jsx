@@ -192,7 +192,7 @@ const hanleFileInput = (e) => {
                 </button>
                 :
                 <button type="submit" disabled={isLoading} className="bg-[#4F3D3D] mt-3 text-white mb-2 py-2 cursor-pointer w-full rounded-md">
-                    Place bet
+                    Submit Prediction
                 </button>
             }
             <p className='text-[13px]'>For frequently asked question, <span className='underline cursor-pointer'>Tap here</span> </p>
