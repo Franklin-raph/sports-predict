@@ -173,7 +173,7 @@ const hanleFileInput = (e) => {
                 </div>
                 <div>
                   <label>Amount to play</label>
-                  <input type="text" placeholder='$1000' onChange={e => setAmountToPlay(e.target.value)}/>
+                  <input type="number" placeholder='$1000' className='[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none' onChange={e => setAmountToPlay(e.target.value)}/>
                 </div>
             </div>
             <div>
