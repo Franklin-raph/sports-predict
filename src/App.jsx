@@ -5,6 +5,7 @@ import Settings from './pages/settings/Settings'
 import Rankings from './pages/rankings/Rankings'
 import Navbar from './components/navbar/Navbar'
 import ContactUs from './pages/contact-us/ContactUs'
+import ReferalSignUp from './pages/referal-sign-up/ReferalSignUp'
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
         <Route path='/settings' element={<Settings baseUrl={baseUrl}/>}/>
         <Route path='/rankings' element={<Rankings baseUrl={baseUrl}/>}/>
         <Route path='/contact-us' element={<ContactUs baseUrl={baseUrl}/>}/>
+        <Route path='/signup/referal/:userid' element={<ReferalSignUp baseUrl={baseUrl}/>}/>
       </Routes>
       <button className='fixed bottom-5 right-5 bg-[#4F3D3D] px-2 py-1 text-xl text-white rounded-md' onClick={() => scrollToTop()}><i class="ri-arrow-up-double-fill"></i></button>
     </HashRouter>

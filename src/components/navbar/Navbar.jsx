@@ -12,6 +12,7 @@ const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
   const user = JSON.parse(localStorage.getItem("user"))
   const [userDropDown, setUserDropDown] = useState(false)
   const [userBalance, setUserBalance] = useState()
+  const [userDetails, setUserDetails] = useState()
   const [loading, setLoading] = useState(false)
   const [showSignInVerificationModal, setShowSignInVerificationModal] = useState(false)
 
@@ -28,6 +29,7 @@ const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
   useEffect(() => {
     // if(user){
       getUserBalance()
+      getUserDetails()
     // }
   },[])
 
@@ -59,7 +61,22 @@ const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
     })
     const data = await response.json()
     setLoading(false)
-    setUserBalance(data.message)
+    setUserBalance(data)
+    console.log(response, data)
+  }
+
+
+  async function getUserDetails(){
+    setLoading(true)
+    const response = await fetch(`${baseUrl}/user/dynamic-details`,{
+      method:"GET",
+      headers:{
+        Authorization: `Bearer ${user.token}`
+      }
+    })
+    const data = await response.json()
+    setLoading(false)
+    setUserDetails(data.message)
     console.log(response, data)
   }
 // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRGF0YSI6eyJfaWQiOiJzYmMtMDMtN2NjM2UzIiwiYWN0aXZlIjp0cnVlLCJzdGF0dXMiOiJhY3RpdmF0ZWQifSwiaWF0IjoxNzAxNzIzNDQ4LCJleHAiOjE3MDE5ODI2NDh9.CdjrrtWZVoi5jLJNOlrKSQ8qePs1XlOenRO2a0--QNc"
@@ -86,16 +103,32 @@ const Navbar = ({setShowSignIn, setShowSignUp, baseUrl}) => {
               </div>
               <i class="ri-menu-line text-lg cursor-pointer" onClick={() => toggleUserDropdown()}></i>
             </div>
-            <div className='mt-[3rem] flex items-end justify-end gap-[20px] relative bottom-0'>
-              {loading ? 
-              <i class="fa-solid fa-spinner fa-spin"></i>
-              :
-              <p>{userBalance && new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'NGN',
-            }).format(userBalance) }</p>
-              }
+
+            <div className='flex items-center justify-between'>
+              <div className='mt-[3rem] flex items-start flex-col justify-end relative bottom-0'>
+                <p>Referral Balance</p>
+                {loading ? 
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                :
+                <p>{userDetails && new Intl.NumberFormat('en-US', {
+                  style: 'currency',
+                  currency: 'NGN',
+              }).format(userDetails.referralDetails.allEarnings)}</p>
+                }
+              </div>
+              <div className='mt-[3rem] text-start flex items-end flex-col justify-end relative bottom-0'>
+                <p>User Balance</p>
+                {loading ? 
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                :
+                <p>{userBalance && new Intl.NumberFormat('en-US', {
+                  style: 'currency',
+                  currency: 'NGN',
+              }).format(userBalance.message)}</p>
+                }
+              </div>
             </div>
+
           </div>
         }
         

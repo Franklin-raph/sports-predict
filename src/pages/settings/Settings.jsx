@@ -16,10 +16,11 @@ const Settings = ({baseUrl}) => {
     const [bank, setBank] = useState("")
     const [accountName, setAccountName] = useState("")
     const [accountNumber, setAccountNumber] = useState("")
-    const tabsArray = ["User Info", "Security", "Account Info"]
+    const tabsArray = ["User Info", "Security", "Account Info", "Referral Info"]
     const [activeTab, setActiveTab] = useState(tabsArray[0])
     const [error, setError] = useState(false)
     const [success, setSuccess] = useState(false)
+    const [referralDetails, setReferralDetails] = useState()
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -47,6 +48,7 @@ const Settings = ({baseUrl}) => {
             setAccountName(data.message.userSbcDetails.accountName)
             setAccountNumber(data.message.userSbcDetails.accountNumber)
             setPhone(data.message.userSbcDetails.phoneNumber)
+            setReferralDetails(data.message.referralDetails)
             console.log(data.message.userSbcDetails.bank)
         }
         console.log(data)
@@ -193,6 +195,43 @@ const Settings = ({baseUrl}) => {
                                 Update Password
                             </button>
                         }
+                    </div>
+                }
+
+                {activeTab === "Referral Info" && 
+                    <div>
+                        <div className='mt-4'>
+                            <label className='font-[500]'>All Referral Earnings</label>
+                            <input type="text" value={referralDetails?.allEarnings} className='w-full'/>
+                        </div>
+                        <div className='mt-4'>
+                            <label className='font-[500]'>Referred By</label>
+                            <input type="text" value={referralDetails?.referredBy} className='w-full' style={{ outline:"none", border:"1px solid balck" }}/>
+                        </div>
+                        <div className='mt-4'>
+                            <label className='font-[500]'>Referral Link</label>
+                            <div className='flex items-center gap-3'>
+                                <p className='text-[13px] border p-1 rounded-md w-full'>{referralDetails?.referralLink}</p>
+                                <p onClick={() => {
+                                    navigator.clipboard.writeText(referralDetails?.referralLink)
+                                }}><i class="ri-clipboard-line text-gray-500 cursor-pointer"></i></p>
+                            </div>
+                        </div>
+                        <div className='mt-4'>
+                            <label className='border-b font-[500]'>All Referrals</label>
+                            {
+                                referralDetails?.allReferrals.map(() => (
+                                    <div className='my-2 ml-2 flex items-center gap-2'>
+                                        <p className='p-[3px] bg-[#4F3D3D] rounded-full'></p>
+                                        <p >Frank1</p>
+                                    </div>
+                                ))
+                            }
+                            {
+                                referralDetails?.allReferrals.length === 0 &&
+                                <p className='mt-3 ml-1'>You do not have any referral yet</p>
+                            }
+                        </div>
                     </div>
                 }
 
